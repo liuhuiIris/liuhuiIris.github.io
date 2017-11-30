@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Mock," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="1.简介whistle继承了Fiddler、Charle的一些优秀设计(如Fiddler请求数据的展示界面)，这两者分别是Windows、macOS平台的优秀代理工具。但whistle不是Fiddler、Charles的复制品，whistle有自己独特丰富的功能，如日志系统log、移动调试工具weinre、插件机制等。">
+<meta name="keywords" content="Mock">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mock数据-Whistle">
+<meta property="og:url" content="http://yoursite.com/2017/06/22/Mock数据-Whistle/index.html">
+<meta property="og:site_name" content="liuhuiIris">
+<meta property="og:description" content="1.简介whistle继承了Fiddler、Charle的一些优秀设计(如Fiddler请求数据的展示界面)，这两者分别是Windows、macOS平台的优秀代理工具。但whistle不是Fiddler、Charles的复制品，whistle有自己独特丰富的功能，如日志系统log、移动调试工具weinre、插件机制等。whistle也对操作请求和响应的方式做了改进，通过扩展系统hosts的配置方式">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-11-29T14:24:18.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Mock数据-Whistle">
+<meta name="twitter:description" content="1.简介whistle继承了Fiddler、Charle的一些优秀设计(如Fiddler请求数据的展示界面)，这两者分别是Windows、macOS平台的优秀代理工具。但whistle不是Fiddler、Charles的复制品，whistle有自己独特丰富的功能，如日志系统log、移动调试工具weinre、插件机制等。whistle也对操作请求和响应的方式做了改进，通过扩展系统hosts的配置方式">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/06/22/Mock数据-Whistle/"/>
+
+
+
+
+
+  <title>Mock数据-Whistle | liuhuiIris</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">liuhuiIris</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/22/Mock数据-Whistle/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hui Liu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/img/avatar/1.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="liuhuiIris">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Mock数据-Whistle</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-22T19:17:48+08:00">
+                2017-06-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="1-简介"><a href="#1-简介" class="headerlink" title="1.简介"></a>1.简介</h1><p>whistle继承了Fiddler、Charle的一些优秀设计(如Fiddler请求数据的展示界面)，这两者分别是Windows、macOS平台的优秀代理工具。但whistle不是Fiddler、Charles的复制品，whistle有自己独特丰富的功能，如日志系统log、移动调试工具weinre、插件机制等。whistle也对操作请求和响应的方式做了改进，通过扩展系统hosts的配置方式及匹配方式，同时支持域名、正则和路径的匹配方式，让所有请求和响应的操作都可以通过类似hosts的配置方式实现，最新版whistle更是支持带端口号的host配置。不仅如此，开发者也可以通过whistle的插件扩展实现自身的个性化功能。实践证明这种方式使用起来方便，用户体验非常好。</p>
+<h1 id="2-安装启动"><a href="#2-安装启动" class="headerlink" title="2.安装启动"></a>2.安装启动</h1><h2 id="2-1-安装node"><a href="#2-1-安装node" class="headerlink" title="2.1 安装node"></a>2.1 安装node</h2><p>直接给链接好了,<a href="https://nodejs.org/en/download/" target="_blank" rel="noopener">node下载</a>,不再赘述</p>
+<h2 id="2-2-安装Whistle"><a href="#2-2-安装Whistle" class="headerlink" title="2.2 安装Whistle"></a>2.2 安装Whistle</h2><p>Node安装成功后，执行如下npm命令安装whistle （Mac或Linux的非root用户需要在命令行前面加sudo，如：sudo npm install -g whistle）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install -g whistle</span><br></pre></td></tr></table></figure>
+<p>安装完成后检查一下,如果正常显示帮助信息,则表示安装成功<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">$ w2 <span class="built_in">help</span></span><br><span class="line"></span><br><span class="line">Usage: w2 &lt;<span class="built_in">command</span>&gt; [options]</span><br><span class="line"></span><br><span class="line">  Commands:</span><br><span class="line"></span><br><span class="line">    run       Start a front service</span><br><span class="line">    start     Start a background service</span><br><span class="line">    stop      Stop current background service</span><br><span class="line">    restart   Restart current background service</span><br><span class="line">    <span class="built_in">help</span>      Display <span class="built_in">help</span> information</span><br><span class="line"></span><br><span class="line">  Options:</span><br><span class="line"></span><br><span class="line">    -h, --<span class="built_in">help</span>                                      output usage information</span><br><span class="line">    -d, --debug                                     debug mode</span><br><span class="line">    -l, --localUIHost [hostname]                    <span class="built_in">local</span> ui host(local.whistlejs.com by default)</span><br><span class="line">    -n, --username [username]                       login username</span><br><span class="line">    -w, --password [password]                       login password</span><br><span class="line">    -S, --storage [newStorageDir]                   the new <span class="built_in">local</span> storage directory</span><br><span class="line">    -C, --copy [storageDir]                         copy storageDir to newStorageDir</span><br><span class="line">    -p, --port [port]                               whistle port(8899 by default)</span><br><span class="line">    -m, --middlewares [script path or module name]  express middlewares path(as: xx,yy/zz.js)</span><br><span class="line">    -u, --uipath [script path]                      web ui plugin path</span><br><span class="line">    -t, --timeout [ms]                              request timeout(36000 ms by default)</span><br><span class="line">    -s, --sockets [number]                          max sockets(12 by default)</span><br><span class="line">    -V, --version                                   output the version number</span><br><span class="line">    -c, --<span class="built_in">command</span> &lt;<span class="built_in">command</span>&gt;                         <span class="built_in">command</span> parameters (<span class="string">"node --harmony"</span>)</span><br></pre></td></tr></table></figure></p>
+<h2 id="2-3-启动whistle"><a href="#2-3-启动whistle" class="headerlink" title="2.3 启动whistle"></a>2.3 启动whistle</h2><p>启动whistle:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">w2 start</span><br></pre></td></tr></table></figure></p>
+<p>Note: 如果要防止其他人访问配置页面，可以在启动时加上登录用户名和密码 -n yourusername -w yourpassword。</p>
+<p>重启whsitle:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ w2 restart</span><br></pre></td></tr></table></figure></p>
+<p>停止whistle:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ w2 stop</span><br></pre></td></tr></table></figure></p>
+<p>调试模式启动whistle(主要用于查看whistle的异常及插件开发):<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ w2 run</span><br></pre></td></tr></table></figure></p>
+<p>启动完whistle后，最后一步需要配置代理。</p>
+<h2 id="2-4-配置代理"><a href="#2-4-配置代理" class="headerlink" title="2.4 配置代理"></a>2.4 配置代理</h2><p><strong>配置信息</strong></p>
+<p>1) 代理服务器：127.0.0.1(如果部署在远程服务器或虚拟机上，改成对应服务器或虚拟机的ip即可)<br>2) 默认端口：8899(如果端口被占用，可以在启动是通过 -p 来指定新的端口，更多信息可以通过执行命令行 w2 help (v0.7.0及以上版本也可以使用w2 help) 查看)</p>
+<p><strong>代理配置方式</strong></p>
+<p><a href="https://chrome.google.com/webstore/detail/whistle/bokhoonoeoodkdhbdhlgaodjdcnbcpdl" target="_blank" rel="noopener">安装Chrome插件</a>并启用</p>
+<p>详细的不多说,就拿本地静态json作为mock数据吧,目前只测试过get请求,以后用到再补充<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pattern resBody://filepath</span><br><span class="line"></span><br><span class="line">e.g. http://192.168.1.205:5001/summary resBody:///Users/cloudwiz/Desktop/cloudw_project/data/summary.json</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Mock/" rel="tag"># Mock</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/14/Ubuntu-Node/" rel="next" title="Ubuntu-Node">
+                <i class="fa fa-chevron-left"></i> Ubuntu-Node
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/21/Jenkins-quickstart/" rel="prev" title="Jenkins-quickstart">
+                Jenkins-quickstart <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/img/avatar/1.jpg"
+                alt="Hui Liu" />
+            
+              <p class="site-author-name" itemprop="name">Hui Liu</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-简介"><span class="nav-number">1.</span> <span class="nav-text">1.简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-安装启动"><span class="nav-number">2.</span> <span class="nav-text">2.安装启动</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-安装node"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 安装node</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-安装Whistle"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 安装Whistle</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-启动whistle"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 启动whistle</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-配置代理"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 配置代理</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hui Liu</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
