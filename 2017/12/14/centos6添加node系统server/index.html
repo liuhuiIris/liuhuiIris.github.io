@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="文章来源 1. centos6 启动/关闭服务1service server start/stop/restart 2. 添加node server这段脚本含义有心情再补充了。。。123456789101112131415161718192021222324252627282930# sdu_server 是为自定义服">
+<meta name="description" content="文章来源: CentOS5.6下离线部署NodeJS环境和工程代码，并添加forever的开机自启动服务 1. centos6 启动/关闭服务1service server start/stop/restart 2. 添加node server这段脚本含义有心情再补充了。。。1234567891011121314151">
 <meta name="keywords" content="centos server">
 <meta property="og:type" content="article">
 <meta property="og:title" content="centos6添加node系统server">
 <meta property="og:url" content="http://yoursite.com/2017/12/14/centos6添加node系统server/index.html">
 <meta property="og:site_name" content="liuhuiIris">
-<meta property="og:description" content="文章来源 1. centos6 启动/关闭服务1service server start/stop/restart 2. 添加node server这段脚本含义有心情再补充了。。。123456789101112131415161718192021222324252627282930# sdu_server 是为自定义服务起的名字,可任意vim /etc/init.d/sdu_server#!/bi">
+<meta property="og:description" content="文章来源: CentOS5.6下离线部署NodeJS环境和工程代码，并添加forever的开机自启动服务 1. centos6 启动/关闭服务1service server start/stop/restart 2. 添加node server这段脚本含义有心情再补充了。。。123456789101112131415161718192021222324252627282930# sdu_serve">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-12-14T12:44:56.000Z">
+<meta property="og:updated_time" content="2017-12-14T12:46:27.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="centos6添加node系统server">
-<meta name="twitter:description" content="文章来源 1. centos6 启动/关闭服务1service server start/stop/restart 2. 添加node server这段脚本含义有心情再补充了。。。123456789101112131415161718192021222324252627282930# sdu_server 是为自定义服务起的名字,可任意vim /etc/init.d/sdu_server#!/bi">
+<meta name="twitter:description" content="文章来源: CentOS5.6下离线部署NodeJS环境和工程代码，并添加forever的开机自启动服务 1. centos6 启动/关闭服务1service server start/stop/restart 2. 添加node server这段脚本含义有心情再补充了。。。123456789101112131415161718192021222324252627282930# sdu_serve">
 
 
 
@@ -310,7 +310,7 @@
       
 
       
-        <p><a href="http://www.alliedjeep.com/127869.htm" target="_blank" rel="noopener">文章来源</a></p>
+        <p>文章来源: <a href="http://www.alliedjeep.com/127869.htm" target="_blank" rel="noopener">CentOS5.6下离线部署NodeJS环境和工程代码，并添加forever的开机自启动服务</a></p>
 <h1 id="1-centos6-启动-关闭服务"><a href="#1-centos6-启动-关闭服务" class="headerlink" title="1. centos6 启动/关闭服务"></a>1. centos6 启动/关闭服务</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service server start/stop/restart</span><br></pre></td></tr></table></figure>
 <h1 id="2-添加node-server"><a href="#2-添加node-server" class="headerlink" title="2. 添加node server"></a>2. 添加node server</h1><p>这段脚本含义有心情再补充了。。。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># sdu_server 是为自定义服务起的名字,可任意</span></span><br><span class="line">vim /etc/init.d/sdu_server</span><br><span class="line"></span><br><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment"># chkconfig:345 99 01 这一串不知道干嘛</span></span><br><span class="line"><span class="comment"># description: 图书查询服务</span></span><br><span class="line"><span class="comment"># 启动服务的脚本路径 /opt/project/sdulibrary/library_db</span></span><br><span class="line"><span class="comment"># 使用node forever 管理node server</span></span><br><span class="line">DIR=<span class="string">'/opt/project/sdulibrary/library_db'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> start_app &#123;</span><br><span class="line">  forever start -a <span class="string">"<span class="variable">$DIR</span>/getlist.js"</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> stop_app &#123;</span><br><span class="line">  forever stop <span class="string">"<span class="variable">$DIR</span>/getlist.js"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">case</span> <span class="variable">$1</span> <span class="keyword">in</span></span><br><span class="line">  start)</span><br><span class="line">    start_app ;;</span><br><span class="line">  stop)</span><br><span class="line">    stop_app ;;</span><br><span class="line">  restart)</span><br><span class="line">    stop_app</span><br><span class="line">    start_app</span><br><span class="line">    ;;</span><br><span class="line">  *)</span><br><span class="line">  <span class="built_in">echo</span> <span class="string">"usage: clearstonecc &#123;start|stop&#125;"</span> ;;</span><br><span class="line"><span class="keyword">esac</span></span><br><span class="line"><span class="built_in">exit</span> 0</span><br></pre></td></tr></table></figure></p>
 <h1 id="3-启动自定义服务"><a href="#3-启动自定义服务" class="headerlink" title="3. 启动自定义服务"></a>3. 启动自定义服务</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service sdu_server start</span><br></pre></td></tr></table></figure>
