@@ -229,6 +229,149 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/26/Ubuntu-Nginx/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hui Liu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/img/avatar/1.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="liuhuiIris">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/05/26/Ubuntu-Nginx/" itemprop="url">Ubuntu--Nginx</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-26T21:46:46+08:00">
+                2017-05-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="1-Ubuntu简介"><a href="#1-Ubuntu简介" class="headerlink" title="1. Ubuntu简介"></a>1. Ubuntu简介</h1><p>在leader的‘淫威’之下，走上了linux的不归路，不负责任地选择了这么个操作系统。</p>
+<p>言归正传，Ubuntu（友帮拓、优般图、乌班图）是一个以桌面应用为主的开源GNU/Linux操作系统，Ubuntu 是基于Debian GNU/Linux，支持x86、amd64（即x64）和ppc架构，由全球化的专业开发团队（Canonical Ltd）打造的。</p>
+<h1 id="2-Linux简单命令"><a href="#2-Linux简单命令" class="headerlink" title="2. Linux简单命令"></a>2. Linux简单命令</h1><p>修改默认用户名</p>
+<pre><code>sudo vim /etc/hostname
+</code></pre><p>修改密码</p>
+<pre><code>sudo passwd root/username
+</code></pre><h1 id="3-Nginx"><a href="#3-Nginx" class="headerlink" title="3. Nginx"></a>3. Nginx</h1><p>安装Nginx</p>
+<pre><code>sudo apt-get install nginx
+</code></pre><p>查看修改配置文件</p>
+<pre><code>sudo vim /etc/nginx/sites-available/default
+
+server { 
+  #80指端口号，可以修改为自己所需要的
+  listen 80 default_server; 
+  #还有这里 同样改为你想要的监听端口 
+  listen [::]:80 default_server ipv6only=on; 
+
+  ...
+}
+</code></pre><p>查看nginx是否安装成功</p>
+<pre><code>在浏览器中输入 localhost, 即可看到nginx默认欢迎页。撒花~~~
+</code></pre><p>nginx常用命令</p>
+<pre><code>nginx -s stop   &gt;&gt;关闭nginx
+nginx -s reload &gt;&gt;重读配置文件
+</code></pre>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/09/windows下的Nginx/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1182,7 +1325,7 @@ http://www.open-open.com/lib/view/open1426232157888.html
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">16</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1195,7 +1338,7 @@ http://www.open-open.com/lib/view/open1426232157888.html
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-count">12</span>
                   <span class="site-state-item-name">标签</span>
                 
               </div>
