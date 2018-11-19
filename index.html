@@ -884,7 +884,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/29/阿里云香港服务器搭建小梯子/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/29/海外服务器搭建小梯子/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Hui Liu">
@@ -903,7 +903,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/11/29/阿里云香港服务器搭建小梯子/" itemprop="url">阿里云香港服务器搭建小梯子</a></h1>
+                <a class="post-title-link" href="/2017/11/29/海外服务器搭建小梯子/" itemprop="url">海外服务器搭建小梯子</a></h1>
         
 
         <div class="post-meta">
@@ -966,6 +966,13 @@
 <p>method为加密方法，可选aes-128-cfb, aes-192-cfb, aes-256-cfb, bf-cfb, cast5-cfb, des-cfb, rc4-md5, chacha20, salsa20, rc4, table<br>server_port为服务监听端口<br>password为密码，可使用密码生成工具生成一个随机密码<br>以上三项信息在配置 shadowsocks 客户端时需要配置一致，具体说明可查看 shadowsocks 的帮助文档。</p>
 <h2 id="2-4-启动"><a href="#2-4-启动" class="headerlink" title="2.4 启动"></a>2.4 启动</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#启动</span></span><br><span class="line">ssserver -c /etc/shadowsocks.json -d start</span><br><span class="line"><span class="comment">#停止</span></span><br><span class="line">ssserver -c /etc/shadowsocks.json -d stop</span><br><span class="line"><span class="comment">#重启</span></span><br><span class="line">ssserver -c /etc/shadowsocks.json -d restart</span><br></pre></td></tr></table></figure>
 <h1 id="3-客户端配置启动"><a href="#3-客户端配置启动" class="headerlink" title="3.客户端配置启动"></a>3.客户端配置启动</h1><p><img src="https://liuhuiiris.github.io/img/shadowsocks/shadowsocks.png" alt="shadowsocks"></p>
+<h1 id="4-连接失败问题"><a href="#4-连接失败问题" class="headerlink" title="4.连接失败问题"></a>4.连接失败问题</h1><h2 id="4-1-服务器未开放443端口-一般是防火墙原因"><a href="#4-1-服务器未开放443端口-一般是防火墙原因" class="headerlink" title="4.1 服务器未开放443端口,一般是防火墙原因"></a>4.1 服务器未开放443端口,一般是防火墙原因</h2><blockquote>
+<p>亦可通过管理端页面配置端口权限</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 启动防火墙</span></span><br><span class="line">$ systemctl start firewalld.service</span><br><span class="line"></span><br><span class="line"><span class="comment"># 若报错 Failed to start firewalld.service: Unit firewalld.service is masked.先执行以下命令</span></span><br><span class="line">$ systemctl unmask firewalld.service</span><br><span class="line"></span><br><span class="line"><span class="comment"># 开放443端口</span></span><br><span class="line">$ firewall-cmd --zone=public --add-port=443/tcp --permanent</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重启防火墙</span></span><br><span class="line">$ firewall-cmd --reload</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>参数说明：<br>–zone #作用域<br>–add-port=80/tcp #添加端口，格式为：端口/通讯协议<br>–permanent #代表永久生效，没有此参数重启后失效</p>
+</blockquote>
 
           
         
