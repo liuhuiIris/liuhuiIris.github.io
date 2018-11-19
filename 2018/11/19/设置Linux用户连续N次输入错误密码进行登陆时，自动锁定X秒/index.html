@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="liuhuiIris">
 <meta property="og:description" content="文章来源：设置Linux用户连续N次输入错误密码进行登陆时，自动锁定X秒 一、在字符终端下，实现某一用户连续错误登陆N次后，就锁定该用户X分钟(pam_tally2) 1234567891011$ vim /etc/pam.d/login# 在#%PAM-1.0 下新起一行，加入auth required pam_tally2.so deny=3 unlock_time=5 even_deny_r">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-11-19T06:18:51.000Z">
+<meta property="og:updated_time" content="2018-11-19T07:48:37.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="设置Linux用户连续N次输入错误密码进行登陆时，自动锁定X秒">
 <meta name="twitter:description" content="文章来源：设置Linux用户连续N次输入错误密码进行登陆时，自动锁定X秒 一、在字符终端下，实现某一用户连续错误登陆N次后，就锁定该用户X分钟(pam_tally2) 1234567891011$ vim /etc/pam.d/login# 在#%PAM-1.0 下新起一行，加入auth required pam_tally2.so deny=3 unlock_time=5 even_deny_r">
@@ -320,7 +320,10 @@
 <p>3、可以使用 pam_tally2 -r -u username 命令，手动清除某用户记录次数。</p>
 </blockquote>
 <p>二、设置Linux用户连续N次登陆失败时，自动锁定X分钟(pam_tally) </p>
-<p>1、如果想在所有登陆方式上，限制所有用户，可以在 /etc/pam.d/system-auth 中增加2行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">auth  required  pam_tally.so  onerr=fail  no_magic_root</span><br><span class="line">account  required  pam_tally.so   deny=3  no_magic_root  even_deny_root_account  per_user  reset</span><br><span class="line"></span><br><span class="line">deny   设置普通用户和root用户连续错误登陆的最大次数，超过最大次数，则锁定该用户；</span><br><span class="line">no_magic_root  连root用户也在限制范围，不给root特殊权限。</span><br><span class="line">详细参数的含义，参见 /usr/share/doc/pam-xxxx/txts/README.pam_tally</span><br><span class="line"></span><br><span class="line">如果不想限制root用户，可以将 even_deny_root_account 取消掉。</span><br></pre></td></tr></table></figure></p>
+<p>1、如果想在所有登陆方式上，限制所有用户，可以在 /etc/pam.d/system-auth 中增加2行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">auth  required  pam_tally.so  onerr=fail  no_magic_root</span><br><span class="line">account  required  pam_tally.so   deny=3  no_magic_root  even_deny_root_account  per_user  reset</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>deny   设置普通用户和root用户连续错误登陆的最大次数，超过最大次数，则锁定该用户；<br>no_magic_root  连root用户也在限制范围，不给root特殊权限。<br>详细参数的含义，参见 /usr/share/doc/pam-xxxx/txts/README.pam_tally<br>如果不想限制root用户，可以将 even_deny_root_account 取消掉。</p>
+</blockquote>
 <p>2、针对不同服务来限制不同登陆方式<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#只在本地文本终端上做限制，可以编辑如下文件，添加的内容和上方一样。</span></span><br><span class="line">vim /etc/pam.d/login</span><br><span class="line"></span><br><span class="line"><span class="comment">#只在远程telnet、ssh登陆上做限制，可以编辑如下文件，添加的内容和上方也一样。</span></span><br><span class="line">vim /etc/pam.d/remote</span><br><span class="line">vim /etc/pam.d/sshd</span><br></pre></td></tr></table></figure></p>
 <p>3、手动解除锁定：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#查看某一用户错误登陆次数：</span></span><br><span class="line">pam_tally –user username</span><br><span class="line"><span class="comment">#例如，查看work用户的错误登陆次数：</span></span><br><span class="line">pam_tally –user work</span><br><span class="line"></span><br><span class="line"><span class="comment">#清空某一用户错误登陆次数：</span></span><br><span class="line">pam_tally –user username –reset</span><br><span class="line"><span class="comment">#例如，清空 work 用户的错误登陆次数，</span></span><br><span class="line">pam_tally –user work –reset</span><br><span class="line"></span><br><span class="line">faillog -r 命令亦可。</span><br></pre></td></tr></table></figure>
@@ -367,6 +370,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/11/19/nmap命令-基础用法/" rel="prev" title="nmap命令--基础用法">
+                nmap命令--基础用法 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -445,7 +452,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

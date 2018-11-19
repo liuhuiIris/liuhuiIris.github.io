@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="linux," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="文章来源: nmap命令—–基础用法 系统漏洞扫描之王-nmap NMap，也就是Network Mapper，是Linux下的网络扫描和嗅探工具包。 其基本功能有三个： （1）是扫描主机端口，嗅探所提供的网络服务 （2）是探测一组主机是否在线 （3）还可以推断主机所用的操作系统，到达主机经过的路由，系统已开放端口的软">
+<meta name="keywords" content="linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="nmap命令--基础用法">
+<meta property="og:url" content="http://yoursite.com/2018/11/19/nmap命令-基础用法/index.html">
+<meta property="og:site_name" content="liuhuiIris">
+<meta property="og:description" content="文章来源: nmap命令—–基础用法 系统漏洞扫描之王-nmap NMap，也就是Network Mapper，是Linux下的网络扫描和嗅探工具包。 其基本功能有三个： （1）是扫描主机端口，嗅探所提供的网络服务 （2）是探测一组主机是否在线 （3）还可以推断主机所用的操作系统，到达主机经过的路由，系统已开放端口的软件版本  nmap端口状态解析open ： 应用程序在该端口接收 TCP 连接或">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-11-19T09:57:24.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="nmap命令--基础用法">
+<meta name="twitter:description" content="文章来源: nmap命令—–基础用法 系统漏洞扫描之王-nmap NMap，也就是Network Mapper，是Linux下的网络扫描和嗅探工具包。 其基本功能有三个： （1）是扫描主机端口，嗅探所提供的网络服务 （2）是探测一组主机是否在线 （3）还可以推断主机所用的操作系统，到达主机经过的路由，系统已开放端口的软件版本  nmap端口状态解析open ： 应用程序在该端口接收 TCP 连接或">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/11/19/nmap命令-基础用法/"/>
+
+
+
+
+
+  <title>nmap命令--基础用法 | liuhuiIris</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">liuhuiIris</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/19/nmap命令-基础用法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hui Liu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/img/avatar/1.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="liuhuiIris">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">nmap命令--基础用法</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-19T17:34:35+08:00">
+                2018-11-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/11/19/nmap命令-基础用法/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2018/11/19/nmap命令-基础用法/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>文章来源: <a href="https://www.cnblogs.com/nmap/p/6232207.html" target="_blank" rel="noopener">nmap命令—–基础用法</a></p>
+<p>系统漏洞扫描之王-nmap</p>
+<p>NMap，也就是Network Mapper，是Linux下的网络扫描和嗅探工具包。</p>
+<p>其基本功能有三个：</p>
+<p>（1）是扫描主机端口，嗅探所提供的网络服务</p>
+<p>（2）是探测一组主机是否在线</p>
+<p>（3）还可以推断主机所用的操作系统，到达主机经过的路由，系统已开放端口的软件版本</p>
+<blockquote>
+<p>nmap端口状态解析<br>open ： 应用程序在该端口接收 TCP 连接或者 UDP 报文。<br>closed ：关闭的端口对于nmap也是可访问的， 它接收nmap探测报文并作出响应。但没有应用程序在其上监听。<br>filtered ：由于包过滤阻止探测报文到达端口，nmap无法确定该端口是否开放。过滤可能来自专业的防火墙设备，路由规则 或者主机上的软件防火墙。<br>unfiltered ：未被过滤状态意味着端口可访问，但是nmap无法确定它是开放还是关闭。 只有用于映射防火墙规则集的 ACK 扫描才会把端口分类到这个状态。<br>open | filtered ：无法确定端口是开放还是被过滤， 开放的端口不响应就是一个例子。没有响应也可能意味着报文过滤器丢弃了探测报文或者它引发的任何反应。UDP，IP协议,FIN, Null 等扫描会引起。<br>closed|filtered：（关闭或者被过滤的）：无法确定端口是关闭的还是被过滤的</p>
+</blockquote>
+<p>nmap有windows和linux</p>
+<p>Nmap是一款网络扫描和主机检测的非常有用的工具。Nmap是不局限于仅仅收集信息和枚举，同时可以用来作为一个漏洞探测器或安全扫描器。它可以适用于winodws,linux,mac等操作系统<br>从下面官网可以下载exe程序包和zip包<br><a href="https://nmap.org/download.html#windows" target="_blank" rel="noopener">https://nmap.org/download.html#windows</a></p>
+<p>nmap常用参数</p>
+<p>nmap扫描速度要比nc快</p>
+<p>面是一些基本的命令和它们的用法的例子：扫描单一的一个主机，命令如下：</p>
+<h2 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h2><p>准备两台机器</p>
+<p>主机A：ip地址 10.0.1.161</p>
+<p>主机B：ip地址 10.0.1.162</p>
+<p>B机器安装nmap的包（这个工具比较强大，习惯上每台机器都安装）<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install nmap -y</span><br></pre></td></tr></table></figure></p>
+<h2 id="端口扫描部分"><a href="#端口扫描部分" class="headerlink" title="端口扫描部分"></a>端口扫描部分</h2><h3 id="前期准备-1"><a href="#前期准备-1" class="headerlink" title="前期准备"></a>前期准备</h3><p>B机器使用nmap去扫描A机器，扫描之前，A机器先查看自己上面有哪些端口在被占用</p>
+<p>A机器上查看本地ipv4的监听端口</p>
+<blockquote>
+<p>netstat参数解释：<br>-l  (listen) 仅列出 Listen (监听) 的服务<br>-t  (tcp) 仅显示tcp相关内容<br>-n (numeric) 直接显示ip地址以及端口，不解析为服务名或者主机名<br>-p (pid) 显示出socket所属的进程PID 以及进程名字<br>–inet 显示ipv4相关协议的监听</p>
+</blockquote>
+<p>查看IPV4端口上的tcp的监听</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@A ~] netstat -lntp --inet</span><br><span class="line"></span><br><span class="line">Active Internet connections (only servers)</span><br><span class="line">Proto Recv-Q Send-Q Local Address               Foreign Address             State       PID/Program name  </span><br><span class="line">tcp        0      0 0.0.0.0:22                  0.0.0.0:*                   LISTEN      2157/sshd          </span><br><span class="line">tcp        0      0 127.0.0.1:631               0.0.0.0:*                   LISTEN      1930/cupsd         </span><br><span class="line">tcp        0      0 127.0.0.1:25                0.0.0.0:*                   LISTEN      2365/master        </span><br><span class="line">tcp        0      0 0.0.0.0:13306               0.0.0.0:*                   LISTEN      21699/mysqld       </span><br><span class="line">tcp        0      0 0.0.0.0:873                 0.0.0.0:*                   LISTEN      2640/rsync         </span><br><span class="line">tcp        0      0 0.0.0.0:111                 0.0.0.0:*                   LISTEN      21505/rpcbind</span><br></pre></td></tr></table></figure>
+<p>过滤掉监控在127.0.0.1的端口</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@A ~] netstat   -lntp    --inet | grep -v 127.0.0.1</span><br><span class="line">Active Internet connections (only servers)</span><br><span class="line">Proto Recv-Q Send-Q Local Address               Foreign Address             State       PID/Program name  </span><br><span class="line">tcp        0      0 0.0.0.0:22                  0.0.0.0:*                   LISTEN      2157/sshd          </span><br><span class="line">tcp        0      0 0.0.0.0:13306               0.0.0.0:*                   LISTEN      21699/mysqld       </span><br><span class="line">tcp        0      0 0.0.0.0:873                 0.0.0.0:*                   LISTEN      2640/rsync         </span><br><span class="line">tcp        0      0 0.0.0.0:111                 0.0.0.0:*                   LISTEN      21505/rpcbind</span><br></pre></td></tr></table></figure>
+<h3 id="扫描tcp端口"><a href="#扫描tcp端口" class="headerlink" title="扫描tcp端口"></a>扫描tcp端口</h3><p>B机器上使用nmap扫描A机器所有端口（-p后面也可以跟空格）</p>
+<p>下面表示扫描A机器的1到65535所有在监听的tcp端口。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap 10.0.1.161  -p1-65535</span><br></pre></td></tr></table></figure></p>
+<p>指定端口范围使用-p参数，如果不指定要扫描的端口，Nmap默认扫描从1到1024再加上nmap-services列出的端口<br>nmap-services是一个包含大约2200个著名的服务的数据库，Nmap通过查询该数据库可以报告那些端口可能对应于什么服务器，但不一定正确。<br>所以正确扫描一个机器开放端口的方法是上面命令。-p1-65535<br>注意，nmap有自己的库，存放一些已知的服务和对应端口号，假如有的服务不在nmap-services，可能nmap就不会去扫描，这就是明明一些端口已经是处于监听状态，nmap默认没扫描出来的原因，需要加入-p参数让其扫描所有端口。<br>虽然直接使用nmap 10.0.1.161也可以扫描出开放的端口，但是使用-p1-65535 能显示出最多的端口<br>区别在于不加-p 时，显示的都是已知协议的端口，对于未知协议的端口没显示</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@B ~] nmap  10.0.1.161  -p1-65535</span><br><span class="line"> </span><br><span class="line">Starting Nmap 5.51 ( http://nmap.org ) at 2016-12-29 10:11 CST</span><br><span class="line">Nmap scan report <span class="keyword">for</span> 10.0.1.161</span><br><span class="line">Host is up (0.00017s latency).</span><br><span class="line">Not shown: 65531 closed ports</span><br><span class="line">PORT      STATE SERVICE</span><br><span class="line">22/tcp    open  ssh</span><br><span class="line">111/tcp   open  rpcbind</span><br><span class="line">873/tcp   open  rsync</span><br><span class="line">13306/tcp open  unknown</span><br><span class="line">MAC Address: 00:0C:29:56:DE:46 (VMware)</span><br><span class="line"> </span><br><span class="line">Nmap <span class="keyword">done</span>: 1 IP address (1 host up) scanned <span class="keyword">in</span> 2.49 seconds</span><br></pre></td></tr></table></figure>
+<p>如果不加-p1-65535，对于未知服务的端口（A机器的13306端口）就没法扫描到</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@B ~] nmap  10.0.1.161</span><br><span class="line"> </span><br><span class="line">Starting Nmap 5.51 ( http://nmap.org ) at 2016-12-29 10:12 CST</span><br><span class="line">Nmap scan report <span class="keyword">for</span> 10.0.1.161</span><br><span class="line">Host is up (0.000089s latency).</span><br><span class="line">Not shown: 997 closed ports</span><br><span class="line">PORT    STATE SERVICE</span><br><span class="line">22/tcp  open  ssh</span><br><span class="line">111/tcp open  rpcbind</span><br><span class="line">873/tcp open  rsync</span><br><span class="line">MAC Address: 00:0C:29:56:DE:46 (VMware)</span><br><span class="line"> </span><br><span class="line">Nmap <span class="keyword">done</span>: 1 IP address (1 host up) scanned <span class="keyword">in</span> 0.43 seconds</span><br></pre></td></tr></table></figure>
+<p>扫描一个IP的多个端口</p>
+<p>连续的端口可以使用横线连起来，端口之间可以使用逗号隔开</p>
+<p>A机器上再启动两个tcp的监听，分别占用7777和8888端口，用于测试，加入&amp;符号可以放入后台</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@A ~] nc -l 7777&amp;</span><br><span class="line">[1] 21779</span><br><span class="line">[root@A ~] nc -l 8888&amp;</span><br><span class="line">[2] 21780</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@B ~] nmap  10.0.1.161   -p20-200,7777,8888</span><br><span class="line"> </span><br><span class="line">Starting Nmap 5.51 ( http://nmap.org ) at 2016-12-29 10:32 CST</span><br><span class="line">Nmap scan report <span class="keyword">for</span> 10.0.1.161</span><br><span class="line">Host is up (0.00038s latency).</span><br><span class="line">Not shown: 179 closed ports</span><br><span class="line">PORT     STATE SERVICE</span><br><span class="line">22/tcp   open  ssh</span><br><span class="line">111/tcp  open  rpcbind</span><br><span class="line">7777/tcp open  cbt</span><br><span class="line">8888/tcp open  sun-answerbook</span><br><span class="line">MAC Address: 00:0C:29:56:DE:46 (VMware)</span><br><span class="line"> </span><br><span class="line">Nmap <span class="keyword">done</span>: 1 IP address (1 host up) scanned <span class="keyword">in</span> 0.17 seconds</span><br></pre></td></tr></table></figure>
+<h3 id="扫描udp端口"><a href="#扫描udp端口" class="headerlink" title="扫描udp端口"></a>扫描udp端口</h3><p>先查看哪些ipv4的监听，使用grep -v排除回环接口上的监听</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@A ~] netstat -lnup --inet |grep -v 127.0.0.1</span><br><span class="line">Active Internet connections (only servers)</span><br><span class="line">Proto Recv-Q Send-Q Local Address               Foreign Address             State       PID/Program name  </span><br><span class="line">udp        0      0 0.0.0.0:111                 0.0.0.0:*                               21505/rpcbind      </span><br><span class="line">udp        0      0 0.0.0.0:631                 0.0.0.0:*                               1930/cupsd         </span><br><span class="line">udp        0      0 10.0.1.161:123              0.0.0.0:*                               2261/ntpd          </span><br><span class="line">udp        0      0 0.0.0.0:123                 0.0.0.0:*                               2261/ntpd          </span><br><span class="line">udp        0      0 0.0.0.0:904                 0.0.0.0:*                               21505/rpcbind</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>-sU：表示udp scan ， udp端口扫描<br>-Pn：不对目标进行ping探测（不判断主机是否在线）（直接扫描端口）<br>对于udp端口扫描比较慢，扫描完6万多个端口需要20分钟左右</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[root@B ~] nmap  -sU  10.0.1.161  -Pn</span><br><span class="line"> </span><br><span class="line">Starting Nmap 5.51 ( http://nmap.org ) at 2016-12-29 10:16 CST</span><br><span class="line">Stats: 0:12:54 elapsed; 0 hosts completed (1 up), 1 undergoing UDP Scan</span><br><span class="line">UDP Scan Timing: About 75.19% <span class="keyword">done</span>; ETC: 10:33 (0:04:16 remaining)</span><br><span class="line">Stats: 0:12:55 elapsed; 0 hosts completed (1 up), 1 undergoing UDP Scan</span><br><span class="line">UDP Scan Timing: About 75.29% <span class="keyword">done</span>; ETC: 10:33 (0:04:15 remaining)</span><br><span class="line">Nmap scan report <span class="keyword">for</span> 10.0.1.161</span><br><span class="line">Host is up (0.0011s latency).</span><br><span class="line">Not shown: 997 closed ports</span><br><span class="line">PORT    STATE         SERVICE</span><br><span class="line">111/udp open          rpcbind</span><br><span class="line">123/udp open          ntp</span><br><span class="line">631/udp open|filtered ipp</span><br><span class="line">MAC Address: 00:0C:29:56:DE:46 (VMware)</span><br><span class="line"> </span><br><span class="line">Nmap <span class="keyword">done</span>: 1 IP address (1 host up) scanned <span class="keyword">in</span> 1081.27 seconds</span><br></pre></td></tr></table></figure>
+<h3 id="扫描多个IP用法"><a href="#扫描多个IP用法" class="headerlink" title="扫描多个IP用法"></a>扫描多个IP用法</h3><p>中间用空格分开<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">[root@B ~] nmap 10.0.1.161  10.0.1.162</span><br><span class="line"> </span><br><span class="line">Starting Nmap 5.51 ( http://nmap.org ) at 2016-12-29 10:18 CST</span><br><span class="line">Nmap scan report <span class="keyword">for</span> 10.0.1.161</span><br><span class="line">Host is up (0.000060s latency).</span><br><span class="line">Not shown: 997 closed ports</span><br><span class="line">PORT    STATE SERVICE</span><br><span class="line">22/tcp  open  ssh</span><br><span class="line">111/tcp open  rpcbind</span><br><span class="line">873/tcp open  rsync</span><br><span class="line">MAC Address: 00:0C:29:56:DE:46 (VMware)</span><br><span class="line"> </span><br><span class="line">Nmap scan report <span class="keyword">for</span> 10.0.1.162</span><br><span class="line">Host is up (0.0000070s latency).</span><br><span class="line">Not shown: 998 closed ports</span><br><span class="line">PORT    STATE SERVICE</span><br><span class="line">22/tcp  open  ssh</span><br><span class="line">111/tcp open  rpcbind</span><br><span class="line"> </span><br><span class="line">Nmap <span class="keyword">done</span>: 2 IP addresses (2 hosts up) scanned <span class="keyword">in</span> 0.26 seconds</span><br></pre></td></tr></table></figure></p>
+<p>也可以采用下面方式逗号隔开</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">[root@B ~] nmap 10.0.1.161,162</span><br><span class="line"> </span><br><span class="line">Starting Nmap 5.51 ( http://nmap.org ) at 2016-12-29 10:19 CST</span><br><span class="line">Nmap scan report <span class="keyword">for</span> 10.0.1.161</span><br><span class="line">Host is up (0.00025s latency).</span><br><span class="line">Not shown: 997 closed ports</span><br><span class="line">PORT    STATE SERVICE</span><br><span class="line">22/tcp  open  ssh</span><br><span class="line">111/tcp open  rpcbind</span><br><span class="line">873/tcp open  rsync</span><br><span class="line">MAC Address: 00:0C:29:56:DE:46 (VMware)</span><br><span class="line"> </span><br><span class="line">Nmap scan report <span class="keyword">for</span> 10.0.1.162</span><br><span class="line">Host is up (0.0000080s latency).</span><br><span class="line">Not shown: 998 closed ports</span><br><span class="line">PORT    STATE SERVICE</span><br><span class="line">22/tcp  open  ssh</span><br><span class="line">111/tcp open  rpcbind</span><br><span class="line"> </span><br><span class="line">Nmap <span class="keyword">done</span>: 2 IP addresses (2 hosts up) scanned <span class="keyword">in</span> 0.81 seconds</span><br></pre></td></tr></table></figure>
+<h3 id="扫描连续的ip地址"><a href="#扫描连续的ip地址" class="headerlink" title="扫描连续的ip地址"></a>扫描连续的ip地址</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">[root@B ~] nmap 10.0.1.161-162</span><br><span class="line"> </span><br><span class="line">Starting Nmap 5.51 ( http://nmap.org ) at 2016-12-29 10:20 CST</span><br><span class="line">Nmap scan report <span class="keyword">for</span> 10.0.1.161</span><br><span class="line">Host is up (0.00011s latency).</span><br><span class="line">Not shown: 997 closed ports</span><br><span class="line">PORT    STATE SERVICE</span><br><span class="line">22/tcp  open  ssh</span><br><span class="line">111/tcp open  rpcbind</span><br><span class="line">873/tcp open  rsync</span><br><span class="line">MAC Address: 00:0C:29:56:DE:46 (VMware)</span><br><span class="line"> </span><br><span class="line">Nmap scan report <span class="keyword">for</span> 10.0.1.162</span><br><span class="line">Host is up (0.0000030s latency).</span><br><span class="line">Not shown: 998 closed ports</span><br><span class="line">PORT    STATE SERVICE</span><br><span class="line">22/tcp  open  ssh</span><br><span class="line">111/tcp open  rpcbind</span><br><span class="line"> </span><br><span class="line">Nmap <span class="keyword">done</span>: 2 IP addresses (2 hosts up) scanned <span class="keyword">in</span> 0.25 seconds</span><br></pre></td></tr></table></figure>
+<h3 id="扫描一个子网网段所有IP"><a href="#扫描一个子网网段所有IP" class="headerlink" title="扫描一个子网网段所有IP"></a>扫描一个子网网段所有IP</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">[root@B ~] nmap  10.0.3.0/24</span><br><span class="line"> </span><br><span class="line">Starting Nmap 5.51 ( http://nmap.org ) at 2016-12-29 10:21 CST</span><br><span class="line">Nmap scan report <span class="keyword">for</span> 10.0.3.1</span><br><span class="line">Host is up (0.020s latency).</span><br><span class="line">Not shown: 997 closed ports</span><br><span class="line">PORT     STATE SERVICE</span><br><span class="line">23/tcp   open  telnet</span><br><span class="line">6666/tcp open  irc</span><br><span class="line">8888/tcp open  sun-answerbook</span><br><span class="line"> </span><br><span class="line">Nmap scan report <span class="keyword">for</span> 10.0.3.2</span><br><span class="line">Host is up (0.012s latency).</span><br><span class="line">Not shown: 997 closed ports</span><br><span class="line">PORT   STATE    SERVICE</span><br><span class="line">21/tcp filtered ftp</span><br><span class="line">22/tcp filtered ssh</span><br><span class="line">23/tcp open     telnet</span><br><span class="line"> </span><br><span class="line">Nmap scan report <span class="keyword">for</span> 10.0.3.3</span><br><span class="line">Host is up (0.018s latency).</span><br><span class="line">Not shown: 997 closed ports</span><br><span class="line">PORT   STATE    SERVICE</span><br><span class="line">21/tcp filtered ftp</span><br><span class="line">22/tcp filtered ssh</span><br><span class="line">23/tcp open     telnet</span><br><span class="line"> </span><br><span class="line">Nmap <span class="keyword">done</span>: 256 IP addresses (3 hosts up) scanned <span class="keyword">in</span> 14.91 seconds</span><br></pre></td></tr></table></figure>
+<h3 id="扫描文件里的IP"><a href="#扫描文件里的IP" class="headerlink" title="扫描文件里的IP"></a>扫描文件里的IP</h3><p>如果你有一个ip地址列表，将这个保存为一个txt文件，和namp在同一目录下,扫描这个txt内的所有主机，用法如下<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">[root@B ~] cat ip.txt</span><br><span class="line">10.0.1.161</span><br><span class="line">10.0.1.162</span><br><span class="line">[root@B ~] nmap -iL ip.txt</span><br><span class="line"> </span><br><span class="line">Starting Nmap 5.51 ( http://nmap.org ) at 2016-12-29 10:23 CST</span><br><span class="line">Nmap scan report <span class="keyword">for</span> 10.0.1.161</span><br><span class="line">Host is up (0.00030s latency).</span><br><span class="line">Not shown: 997 closed ports</span><br><span class="line">PORT    STATE SERVICE</span><br><span class="line">22/tcp  open  ssh</span><br><span class="line">111/tcp open  rpcbind</span><br><span class="line">873/tcp open  rsync</span><br><span class="line">MAC Address: 00:0C:29:56:DE:46 (VMware)</span><br><span class="line"> </span><br><span class="line">Nmap scan report <span class="keyword">for</span> 10.0.1.162</span><br><span class="line">Host is up (0.0000070s latency).</span><br><span class="line">Not shown: 998 closed ports</span><br><span class="line">PORT    STATE SERVICE</span><br><span class="line">22/tcp  open  ssh</span><br><span class="line">111/tcp open  rpcbind</span><br><span class="line"> </span><br><span class="line">Nmap <span class="keyword">done</span>: 2 IP addresses (2 hosts up) scanned <span class="keyword">in</span> 0.68 seconds</span><br></pre></td></tr></table></figure></p>
+<h3 id="扫描地址段是排除某个IP地址"><a href="#扫描地址段是排除某个IP地址" class="headerlink" title="扫描地址段是排除某个IP地址"></a>扫描地址段是排除某个IP地址</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@B ~] nmap 10.0.1.161-162  --exclude 10.0.1.162</span><br><span class="line"> </span><br><span class="line">Starting Nmap 5.51 ( http://nmap.org ) at 2016-12-29 10:24 CST</span><br><span class="line">Nmap scan report <span class="keyword">for</span> 10.0.1.161</span><br><span class="line">Host is up (0.0022s latency).</span><br><span class="line">Not shown: 997 closed ports</span><br><span class="line">PORT    STATE SERVICE</span><br><span class="line">22/tcp  open  ssh</span><br><span class="line">111/tcp open  rpcbind</span><br><span class="line">873/tcp open  rsync</span><br><span class="line">MAC Address: 00:0C:29:56:DE:46 (VMware)</span><br><span class="line"> </span><br><span class="line">Nmap <span class="keyword">done</span>: 1 IP address (1 host up) scanned <span class="keyword">in</span> 0.53 seconds</span><br></pre></td></tr></table></figure>
+<h3 id="扫描时排除多个IP地址"><a href="#扫描时排除多个IP地址" class="headerlink" title="扫描时排除多个IP地址"></a>扫描时排除多个IP地址</h3><p>排除连续的，可以使用横线连接起来<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@B ~] nmap 10.0.1.161-163   --exclude 10.0.1.162-163</span><br><span class="line"> </span><br><span class="line">Starting Nmap 5.51 ( http://nmap.org ) at 2016-12-29 10:25 CST</span><br><span class="line">Nmap scan report <span class="keyword">for</span> 10.0.1.161</span><br><span class="line">Host is up (0.00023s latency).</span><br><span class="line">Not shown: 997 closed ports</span><br><span class="line">PORT    STATE SERVICE</span><br><span class="line">22/tcp  open  ssh</span><br><span class="line">111/tcp open  rpcbind</span><br><span class="line">873/tcp open  rsync</span><br><span class="line">MAC Address: 00:0C:29:56:DE:46 (VMware)</span><br><span class="line"> </span><br><span class="line">Nmap <span class="keyword">done</span>: 1 IP address (1 host up) scanned <span class="keyword">in</span> 0.56 seconds</span><br></pre></td></tr></table></figure></p>
+<p>　　<br>排除分散的，使用逗号隔开<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@B ~] nmap 10.0.1.161-163 --exclude 10.0.1.161,10.0.1.163</span><br><span class="line"> </span><br><span class="line">Starting Nmap 5.51 ( http://nmap.org ) at 2016-12-29 10:27 CST</span><br><span class="line">Nmap scan report <span class="keyword">for</span> 10.0.1.162</span><br><span class="line">Host is up (0.0000030s latency).</span><br><span class="line">Not shown: 998 closed ports</span><br><span class="line">PORT    STATE SERVICE</span><br><span class="line">22/tcp  open  ssh</span><br><span class="line">111/tcp open  rpcbind</span><br><span class="line"> </span><br><span class="line">Nmap <span class="keyword">done</span>: 1 IP address (1 host up) scanned <span class="keyword">in</span> 0.12 seconds</span><br></pre></td></tr></table></figure></p>
+<p>扫描多个地址时排除文件里的IP地址（可以用来排除不连续的IP地址）<br>把10.0.1.161和10.0.1.163添加到一个文件里，文件名可以随意取<br>下面扫描10.0.1.161到10.0.1.163 这3个IP地址，排除10.0.1.161和10.0.1.163这两个IP</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@B ~] cat ex.txt</span><br><span class="line">10.0.1.161</span><br><span class="line">10.0.1.163</span><br><span class="line">[root@B ~] nmap 10.0.1.161-163  --excludefile ex.txt</span><br><span class="line"> </span><br><span class="line">Starting Nmap 5.51 ( http://nmap.org ) at 2016-12-29 10:29 CST</span><br><span class="line">Nmap scan report <span class="keyword">for</span> 10.0.1.162</span><br><span class="line">Host is up (0.0000050s latency).</span><br><span class="line">Not shown: 998 closed ports</span><br><span class="line">PORT    STATE SERVICE</span><br><span class="line">22/tcp  open  ssh</span><br><span class="line">111/tcp open  rpcbind</span><br><span class="line"> </span><br><span class="line">Nmap <span class="keyword">done</span>: 1 IP address (1 host up) scanned <span class="keyword">in</span> 0.18 seconds</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag"># linux</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/19/设置Linux用户连续N次输入错误密码进行登陆时，自动锁定X秒/" rel="next" title="设置Linux用户连续N次输入错误密码进行登陆时，自动锁定X秒">
+                <i class="fa fa-chevron-left"></i> 设置Linux用户连续N次输入错误密码进行登陆时，自动锁定X秒
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/img/avatar/1.jpg"
+                alt="Hui Liu" />
+            
+              <p class="site-author-name" itemprop="name">Hui Liu</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/liuhuiIris" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:liuhuiiris@gmail.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://twitter.com/liuhuiiris" target="_blank" title="Twitter">
+                    
+                      <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前期准备"><span class="nav-number">1.</span> <span class="nav-text">前期准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#端口扫描部分"><span class="nav-number">2.</span> <span class="nav-text">端口扫描部分</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#前期准备-1"><span class="nav-number">2.1.</span> <span class="nav-text">前期准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#扫描tcp端口"><span class="nav-number">2.2.</span> <span class="nav-text">扫描tcp端口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#扫描udp端口"><span class="nav-number">2.3.</span> <span class="nav-text">扫描udp端口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#扫描多个IP用法"><span class="nav-number">2.4.</span> <span class="nav-text">扫描多个IP用法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#扫描连续的ip地址"><span class="nav-number">2.5.</span> <span class="nav-text">扫描连续的ip地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#扫描一个子网网段所有IP"><span class="nav-number">2.6.</span> <span class="nav-text">扫描一个子网网段所有IP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#扫描文件里的IP"><span class="nav-number">2.7.</span> <span class="nav-text">扫描文件里的IP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#扫描地址段是排除某个IP地址"><span class="nav-number">2.8.</span> <span class="nav-text">扫描地址段是排除某个IP地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#扫描时排除多个IP地址"><span class="nav-number">2.9.</span> <span class="nav-text">扫描时排除多个IP地址</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hui Liu</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'liuhuiiris',
+            repo: 'liuhuiIris.github.io',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: '669c525401e94b83a7f83c852c204e60b269c895',
+            
+                client_id: 'b60a7b935c761fc413af'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
