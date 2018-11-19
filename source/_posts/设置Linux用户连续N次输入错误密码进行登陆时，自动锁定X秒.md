@@ -36,13 +36,12 @@ root_unlock_time  #设定root用户锁定后，多少时间后解锁，单位是
 ```bash
 auth  required  pam_tally.so  onerr=fail  no_magic_root
 account  required  pam_tally.so   deny=3  no_magic_root  even_deny_root_account  per_user  reset
-
-deny   设置普通用户和root用户连续错误登陆的最大次数，超过最大次数，则锁定该用户；
-no_magic_root  连root用户也在限制范围，不给root特殊权限。
-详细参数的含义，参见 /usr/share/doc/pam-xxxx/txts/README.pam_tally
-
-如果不想限制root用户，可以将 even_deny_root_account 取消掉。
 ```
+
+> deny   设置普通用户和root用户连续错误登陆的最大次数，超过最大次数，则锁定该用户；
+> no_magic_root  连root用户也在限制范围，不给root特殊权限。
+> 详细参数的含义，参见 /usr/share/doc/pam-xxxx/txts/README.pam_tally
+> 如果不想限制root用户，可以将 even_deny_root_account 取消掉。
 
 2、针对不同服务来限制不同登陆方式
 ```bash
