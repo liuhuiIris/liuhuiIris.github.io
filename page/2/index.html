@@ -229,6 +229,133 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/29/hexo换电脑/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hui Liu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/img/avatar/1.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="liuhuiIris">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/05/29/hexo换电脑/" itemprop="url">hexo换电脑</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-29T23:03:01+08:00">
+                2017-05-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="1-源代码上云端"><a href="#1-源代码上云端" class="headerlink" title="1. 源代码上云端"></a>1. 源代码上云端</h1><p>将源代码上传到github上<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git remote add origin git@github.com:liuhuiIris/liuhuiIris.github.io.git</span><br></pre></td></tr></table></figure></p>
+<p>如果提示错误 <em>**</em>.git<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ git init</span><br><span class="line">```    </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">接下来就是常规的git操作</span><br><span class="line">``` bash</span><br><span class="line">$ git checkout -b hexo</span><br><span class="line">$ git add .</span><br><span class="line">$ git ci -m <span class="string">'随便写点什么'</span></span><br><span class="line">$ git push   &lt;&lt;如果首次创建，根据提示输入命令</span><br></pre></td></tr></table></figure></p>
+<h1 id="2-在新电脑上配置hexo"><a href="#2-在新电脑上配置hexo" class="headerlink" title="2. 在新电脑上配置hexo"></a>2. 在新电脑上配置hexo</h1><p>将代码clone下来，master上是部署的博客，hexo分支上是我们的源代码，切到源代码分支<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ 1、git <span class="built_in">clone</span> git@github.com:liuhuiIris/liuhuiIris.github.io.git</span><br><span class="line">$ git checkout hexo</span><br><span class="line">$ sudo npm install hexo -g</span><br><span class="line">$ npm install hexo --save</span><br><span class="line">$ npm install</span><br></pre></td></tr></table></figure></p>
+<h1 id="3-继续愉快的写博客吧"><a href="#3-继续愉快的写博客吧" class="headerlink" title="3. 继续愉快的写博客吧"></a>3. 继续愉快的写博客吧</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new blockName</span><br><span class="line">$ hexo g</span><br><span class="line">$ hexo s</span><br><span class="line">$ hexo d</span><br></pre></td></tr></table></figure>
+<h1 id="4-不成功？"><a href="#4-不成功？" class="headerlink" title="4. 不成功？"></a>4. 不成功？</h1><p>1、服务提示 no index.html</p>
+<p>检查thmes文件是否缺失，重新配置下主题，再次编译</p>
+<p>2、 重新部署hexo不需要hexo init</p>
+<p>如果运行了hexo init也没关系，重新配置 _config.yml文件<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  <span class="built_in">type</span>: git</span><br><span class="line">  repository: git@github.com:liuhuiIris/liuhuiIris.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/26/Ubuntu-Nginx/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1325,7 +1452,7 @@ http://www.open-open.com/lib/view/open1426232157888.html
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-count">17</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1338,7 +1465,7 @@ http://www.open-open.com/lib/view/open1426232157888.html
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">标签</span>
                 
               </div>
@@ -1397,7 +1524,7 @@ http://www.open-open.com/lib/view/open1426232157888.html
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
