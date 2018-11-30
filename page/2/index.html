@@ -229,12 +229,195 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/21/Jenkins-quickstart/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hui Liu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/img/avatar/1.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="liuhuiIris">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/11/21/Jenkins-quickstart/" itemprop="url">Jenkins-quickstart</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-21T21:28:18+08:00">
+                2017-11-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>文章来源： <a href="https://github.com/muyinchen/woker/blob/master/%E9%9B%86%E6%88%90%E6%B5%8B%E8%AF%95%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/%E6%89%8B%E6%8A%8A%E6%89%8B%E6%95%99%E4%BD%A0%E6%90%AD%E5%BB%BAJenkins%2BGithub%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%E7%8E%AF%E5%A2%83.md" target="_blank" rel="noopener">muyinchen</a></p>
+</blockquote>
+<h1 id="手把手教你搭建Jenkins-Github持续集成环境"><a href="#手把手教你搭建Jenkins-Github持续集成环境" class="headerlink" title="手把手教你搭建Jenkins+Github持续集成环境"></a>手把手教你搭建Jenkins+Github持续集成环境</h1><h2 id="1-安装jenkins"><a href="#1-安装jenkins" class="headerlink" title="1.安装jenkins"></a>1.安装jenkins</h2><h3 id="环境：CentOS-7-0"><a href="#环境：CentOS-7-0" class="headerlink" title="环境：CentOS 7.0"></a>环境：<code>CentOS 7.0</code></h3><h3 id="安装方式："><a href="#安装方式：" class="headerlink" title="安装方式："></a>安装方式：</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ yum install yum-fastestmirror -y  <span class="comment">#安装自动选择最快源的插件</span></span><br><span class="line"><span class="comment">#添加Jenkins源:</span></span><br><span class="line">$ sudo wget -O /etc/yum.repos.d/jenkins.repo http://jenkins-ci.org/redhat/jenkins.repo</span><br><span class="line">$ sudo rpm --import http://pkg.jenkins-ci.org/redhat/jenkins-ci.org.key</span><br><span class="line">$ yum install jenkins               <span class="comment">#安装jenkins</span></span><br></pre></td></tr></table></figure>
+<h3 id="启动方式："><a href="#启动方式：" class="headerlink" title="启动方式："></a>启动方式：</h3><p><code>$ sudo service jenkins start</code></p>
+<h3 id="访问方式："><a href="#访问方式：" class="headerlink" title="访问方式："></a>访问方式：</h3><p>浏览器输入<code>http://your server ip:8080/</code></p>
+<h3 id="更改配置（如端口）方式："><a href="#更改配置（如端口）方式：" class="headerlink" title="更改配置（如端口）方式："></a>更改配置（如端口）方式：</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ vim /etc/sysconfig/jenkins</span><br><span class="line">$ sudo service jenkins restart</span><br></pre></td></tr></table></figure>
+<h2 id="2-jenkins基础配置"><a href="#2-jenkins基础配置" class="headerlink" title="2.jenkins基础配置"></a>2.jenkins基础配置</h2><h3 id="Unlock"><a href="#Unlock" class="headerlink" title="Unlock"></a>Unlock</h3><p>经过上面的配置，你可以访问你的Jenkins了，在浏览器中输入：<code>http://your server ip:8080/</code>，效果如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2518611-d93724fadf9ab855.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="img"></p>
+<p>按照提示我们执行<code>cat /var/lib/jenkins/secrets/initialAdminPassword</code>得到<code>Administrator password</code>，输入后点击Continue，如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2518611-47a485249b5741b3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="img"></p>
+<p>选择<code>install suggested plugins</code>，等待安装完毕，如果有安装失败的可以跳过，之后可以手动根据需求安装。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2518611-72114d3f8f7a42c9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="img"></p>
+<h3 id="设置初始账户和密码"><a href="#设置初始账户和密码" class="headerlink" title="设置初始账户和密码"></a>设置初始账户和密码</h3><p><img src="http://upload-images.jianshu.io/upload_images/2518611-7e1e1d4a0317292e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="img"></p>
+<p>设置完成后进入界面：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2518611-6a2a1d6ab190eca4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="img"></p>
+<h2 id="3-github配置"><a href="#3-github配置" class="headerlink" title="3.github配置"></a>3.github配置</h2><h3 id="sercret-text"><a href="#sercret-text" class="headerlink" title="sercret text"></a>sercret text</h3><p>注：此处需要一个对项目有写权限的账户</p>
+<blockquote>
+<p>进入github –&gt; setting –&gt; Personal Access Token –&gt; Generate new token</p>
+</blockquote>
+<p><img src="http://upload-images.jianshu.io/upload_images/2518611-6c844d8a6bb58800.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="img"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/436630-943711ff2a74919d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="img"></p>
+<p>自己先保存此<code>token</code>，如果丢失，之后再也无法找到这个<code>token</code>。</p>
+<h3 id="GitHub-webhooks-设置"><a href="#GitHub-webhooks-设置" class="headerlink" title="GitHub webhooks 设置"></a>GitHub webhooks 设置</h3><blockquote>
+<p>进入GitHub上指定的项目 –&gt; setting –&gt; WebHooks&amp;Services –&gt; add webhook –&gt; 输入刚刚部署jenkins的服务器的IP</p>
+</blockquote>
+<p><img src="http://upload-images.jianshu.io/upload_images/436630-1dbb649d8ae063b3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="img"></p>
+<h2 id="4-jenkins的github配置"><a href="#4-jenkins的github配置" class="headerlink" title="4.jenkins的github配置"></a>4.jenkins的github配置</h2><h3 id="安装GitHub-Plugin"><a href="#安装GitHub-Plugin" class="headerlink" title="安装GitHub Plugin"></a>安装GitHub Plugin</h3><blockquote>
+<p>系统管理–&gt;插件管理–&gt;可选插件</p>
+</blockquote>
+<p>直接安装Github Plugin, jenkins会自动帮你解决其他插件的依赖，直接安装该插件Jenkins会自动帮你安装plain-credentials 、<a href="http://lib.csdn.net/base/git" target="_blank" rel="noopener">Git</a> 、 credentials 、 github-api</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/436630-ff8c8744ed7ade0d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="img"></p>
+<h3 id="配置GitHub-Plugin"><a href="#配置GitHub-Plugin" class="headerlink" title="配置GitHub Plugin"></a>配置GitHub Plugin</h3><blockquote>
+<p>系统管理 –&gt; 系统设置 –&gt; GitHub –&gt; Add GitHub Sever</p>
+</blockquote>
+<p>如下图所示</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2518611-df2c88b65c841fa6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="img"></p>
+<p>API URL 输入 <code>https://api.github.com</code>，Credentials点击Add添加，Kind选择Secret Text,具体如下图所示。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2518611-547c6e295e263296.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="img"></p>
+<p>设置完成后，点击<code>TestConnection</code>,提示<code>Credentials
+ verified for user UUserName, rate limit: xxx</code>,则表明有效。</p>
+<h3 id="创建一个freestyle任务"><a href="#创建一个freestyle任务" class="headerlink" title="创建一个freestyle任务"></a>创建一个freestyle任务</h3><p>- General 设置<br>填写GitHub project URL, 也就是你的项目主页<br>eg. <code>https://github.com/your_name/your_repo_name</code></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2518611-7c250beb46759edf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="img"></p>
+<p>- 配置源码管理</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2518611-9d7836236cbf989b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="img"></p>
+<ol>
+<li>填写项目的git地址, eg. <code>https://github.com/your_name/your_repo_name.git</code></li>
+<li>添加github用户和密码</li>
+<li>选择githubweb源码库浏览器，并填上你的项目URL，这样每次构建都会生成对应的changes，可直接链到github上看变更详情</li>
+</ol>
+<p>- 构建触发器，构建环境</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2518611-9906f0e72e95a468.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="img"></p>
+<p>- 构建</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2518611-a84115bff915a637.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="img"></p>
+<p>- 构建后操作</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2518611-e8678da6c93bc25c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="img"></p>
+<p>最后点击保存即可</p>
+<h2 id="5-测试效果"><a href="#5-测试效果" class="headerlink" title="5.测试效果"></a>5.测试效果</h2><p><a href="http://lib.csdn.net/base/softwaretest" target="_blank" rel="noopener">测试</a>效果1</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2518611-57dca991dbff5808.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="img"></p>
+<p>测试效果2</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2518611-a10aefcc8035bb5e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="img"></p>
+<h2 id="6-参考："><a href="#6-参考：" class="headerlink" title="6.参考："></a>6.参考：</h2><blockquote>
+<p><a href="http://www.jianshu.com/p/b2ed4d23a3a9" target="_blank" rel="noopener">Jenkins+Github持续集成</a><br><a href="http://www.cnblogs.com/itech/archive/2011/11/23/2260009.html" target="_blank" rel="noopener">Jenkins入门总结</a></p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/22/Mock数据-Whistle/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Hui Liu">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/img/avatar/1.jpg">
+      <meta itemprop="image" content="/img/avatar/1.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -369,7 +552,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Hui Liu">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/img/avatar/1.jpg">
+      <meta itemprop="image" content="/img/avatar/1.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -496,7 +679,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Hui Liu">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/img/avatar/1.jpg">
+      <meta itemprop="image" content="/img/avatar/1.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -623,7 +806,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Hui Liu">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/img/avatar/1.jpg">
+      <meta itemprop="image" content="/img/avatar/1.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -766,7 +949,7 @@ nginx -s reload &gt;&gt;重读配置文件
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Hui Liu">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/img/avatar/1.jpg">
+      <meta itemprop="image" content="/img/avatar/1.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -945,7 +1128,7 @@ http {
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Hui Liu">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/img/avatar/1.jpg">
+      <meta itemprop="image" content="/img/avatar/1.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -1131,7 +1314,7 @@ page .wx-swiper-dot-active::before {
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Hui Liu">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/img/avatar/1.jpg">
+      <meta itemprop="image" content="/img/avatar/1.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -1314,7 +1497,7 @@ Git 是 Linus Torvalds 为了帮助管理 Linux 内核开发而开发的一个�
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Hui Liu">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/img/avatar/1.jpg">
+      <meta itemprop="image" content="/img/avatar/1.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -1474,7 +1657,7 @@ Ctrl+Shift+P    -&gt; List Packages 可以找到下述插件
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Hui Liu">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/img/avatar/1.jpg">
+      <meta itemprop="image" content="/img/avatar/1.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -1700,7 +1883,7 @@ http://www.open-open.com/lib/view/open1426232157888.html
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <img class="site-author-image" itemprop="image"
-                src="/img/avatar/1.jpg"
+                src="/img/avatar/1.png"
                 alt="Hui Liu" />
             
               <p class="site-author-name" itemprop="name">Hui Liu</p>
@@ -1714,7 +1897,7 @@ http://www.open-open.com/lib/view/open1426232157888.html
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1727,7 +1910,7 @@ http://www.open-open.com/lib/view/open1426232157888.html
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">标签</span>
                 
               </div>

@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="linux rsyslog," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="以日志服务器为10.44.85.15为例，日志源机器为10.44.85.16  1. 在10.44.85.16上修改/etc/rsyslog.conf1234567891011121314151617181920212223242526272829303132333435363738394041424344454647">
+<meta name="keywords" content="linux rsyslog">
+<meta property="og:type" content="article">
+<meta property="og:title" content="rsyslog收集日志">
+<meta property="og:url" content="http://yoursite.com/2018/11/30/rsyslog收集日志/index.html">
+<meta property="og:site_name" content="liuhuiIris">
+<meta property="og:description" content="以日志服务器为10.44.85.15为例，日志源机器为10.44.85.16  1. 在10.44.85.16上修改/etc/rsyslog.conf1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162$ModLoad">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-11-30T06:35:21.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="rsyslog收集日志">
+<meta name="twitter:description" content="以日志服务器为10.44.85.15为例，日志源机器为10.44.85.16  1. 在10.44.85.16上修改/etc/rsyslog.conf1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162$ModLoad">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/11/30/rsyslog收集日志/"/>
+
+
+
+
+
+  <title>rsyslog收集日志 | liuhuiIris</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">liuhuiIris</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/30/rsyslog收集日志/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hui Liu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/img/avatar/1.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="liuhuiIris">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">rsyslog收集日志</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-30T14:33:53+08:00">
+                2018-11-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/11/30/rsyslog收集日志/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2018/11/30/rsyslog收集日志/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>以日志服务器为10.44.85.15为例，日志源机器为10.44.85.16</p>
+</blockquote>
+<h1 id="1-在10-44-85-16上修改-etc-rsyslog-conf"><a href="#1-在10-44-85-16上修改-etc-rsyslog-conf" class="headerlink" title="1. 在10.44.85.16上修改/etc/rsyslog.conf"></a>1. 在10.44.85.16上修改/etc/rsyslog.conf</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ModLoad</span> imuxsock <span class="comment"># provides support for local system logging (e.g. via logger command)</span></span><br><span class="line"><span class="comment"># $ModLoad imjournal # provides access to the systemd journal</span></span><br><span class="line"></span><br><span class="line"> File to store the position <span class="keyword">in</span> the journal</span><br><span class="line"><span class="variable">$IMJournalStateFile</span> imjournal.state</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#### RULES ####</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Log all kernel messages to the console.</span></span><br><span class="line"><span class="comment"># Logging much else clutters up the screen.</span></span><br><span class="line"><span class="comment">#kern.*                                                 /dev/console</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Log anything (except mail) of level info or higher.</span></span><br><span class="line"><span class="comment"># Don't log private authentication messages!</span></span><br><span class="line">*.info;mail.none;authpriv.none;cron.none                /var/<span class="built_in">log</span>/messages</span><br><span class="line"></span><br><span class="line"><span class="comment"># The authpriv file has restricted access.</span></span><br><span class="line">authpriv.*                                              /var/<span class="built_in">log</span>/secure</span><br><span class="line"></span><br><span class="line"><span class="comment"># Log all the mail messages in one place.</span></span><br><span class="line">mail.*                                                  -/var/<span class="built_in">log</span>/maillog</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Log cron stuff</span></span><br><span class="line">cron.*                                                  /var/<span class="built_in">log</span>/cron</span><br><span class="line"></span><br><span class="line"><span class="comment"># Everybody gets emergency messages</span></span><br><span class="line">*.emerg                                                 :omusrmsg:*</span><br><span class="line"></span><br><span class="line"><span class="comment"># Save news errors of level crit and higher in a special file.</span></span><br><span class="line">uucp,news.crit                                          /var/<span class="built_in">log</span>/spooler</span><br><span class="line"></span><br><span class="line"><span class="comment"># Save boot messages also to boot.log</span></span><br><span class="line">local7.*                                                /var/<span class="built_in">log</span>/boot.log</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将自定义服务日志发送至日志服务器</span></span><br><span class="line"><span class="variable">$ModLoad</span> imfile</span><br><span class="line"><span class="variable">$InputFilePollInterval</span> 10</span><br><span class="line"></span><br><span class="line"><span class="variable">$InputFileName</span>         /var/<span class="built_in">log</span>/webfront/webfront.log      <span class="comment">#要监控的日志文件路径</span></span><br><span class="line"><span class="variable">$InputFileTag</span>          webfront-info:                      <span class="comment"># 定义文件标签 ，注意最后是冒号：</span></span><br><span class="line"><span class="variable">$InputFileStateFile</span>    state-webfront-info                 <span class="comment">#定义状态文件</span></span><br><span class="line"><span class="variable">$InputRunFileMonitor</span>                                       <span class="comment">#激活读取，可以设置多组日志读取，每组结束时设置本参数</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ### begin forwarding rule ###</span></span><br><span class="line"><span class="comment"># The statement between the begin ... end define a SINGLE forwarding</span></span><br><span class="line"><span class="comment"># rule. They belong together, do NOT split them. If you create multiple</span></span><br><span class="line"><span class="comment"># forwarding rules, duplicate the whole block!</span></span><br><span class="line"><span class="comment"># Remote Logging (we use TCP for reliable delivery)</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># An on-disk queue is created for this action. If the remote host is</span></span><br><span class="line"><span class="comment"># down, messages are spooled to disk and sent when it is up again.</span></span><br><span class="line"><span class="comment">#$ActionQueueFileName fwdRule1 # unique name prefix for spool files</span></span><br><span class="line"><span class="comment">#$ActionQueueMaxDiskSpace 1g   # 1gb space limit (use as much as possible)</span></span><br><span class="line"><span class="comment">#$ActionQueueSaveOnShutdown on # save messages to disk on shutdown</span></span><br><span class="line"><span class="comment">#$ActionQueueType LinkedList   # run asynchronously</span></span><br><span class="line"><span class="comment">#$ActionResumeRetryCount -1    # infinite retries if host is down</span></span><br><span class="line"><span class="comment"># remote host is: name/ip:port, e.g. 192.168.0.1:514, port optional</span></span><br><span class="line"><span class="comment">#*.* @@remote-host:514</span></span><br><span class="line">*.* @@10.44.85.15:514</span><br><span class="line"><span class="comment"># ### end of the forwarding rule ###</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>一般默认配置即为发送系统日志，可以不做修改，注意最后<br><em>.</em> @@remote-host:514 修改为目标日志服务器ip</p>
+</blockquote>
+<h1 id="2-重启rsyslog"><a href="#2-重启rsyslog" class="headerlink" title="2. 重启rsyslog"></a>2. 重启rsyslog</h1><p>方法1：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/etc/init.d/rsyslog restart <span class="comment">#修改配置文件后一定要重启rsyslog服务</span></span><br><span class="line"></span><br><span class="line">/etc/init.d/rsyslog status  <span class="comment">#可查看服务状态</span></span><br></pre></td></tr></table></figure>
+<p>方法2：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">service rsyslog restart <span class="comment">#修改配置文件后一定要重启rsyslog服务</span></span><br><span class="line"></span><br><span class="line">service rsyslog status  <span class="comment">#查看服务状态</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="3-在10-44-85-15上修改-etc-rsyslog-conf"><a href="#3-在10-44-85-15上修改-etc-rsyslog-conf" class="headerlink" title="3. 在10.44.85.15上修改/etc/rsyslog.conf"></a>3. 在10.44.85.15上修改/etc/rsyslog.conf</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">$ModLoad imuxsock</span><br><span class="line">$ModLoad imjournal</span><br><span class="line">$ModLoad immark</span><br><span class="line">$ModLoad imudp</span><br><span class="line">$UDPServerRun 514</span><br><span class="line">$ModLoad imtcp</span><br><span class="line">$InputTCPServerRun 514</span><br><span class="line">$WorkDirectory /var/lib/rsyslog</span><br><span class="line">$AllowedSender tcp, 10.44.85.0/24</span><br><span class="line">$ActionFileDefaultTemplate RSYSLOG_TraditionalFileFormat</span><br><span class="line">$template Remote,&quot;/var/log/%fromhost-ip%/%fromhost-ip%_%$YEAR%-%$MONTH%-%$DAY%.log&quot;</span><br><span class="line">:fromhost-ip, !isequal, &quot;127.0.0.1&quot; ?Remote</span><br><span class="line">$IncludeConfig /etc/rsyslog.d/*.conf</span><br><span class="line">$OmitLocalLogging on</span><br><span class="line">$IMJournalStateFile imjournal.state</span><br><span class="line"></span><br><span class="line">*.info;mail.none;authpriv.none;cron.none	/var/log/rsyslog</span><br><span class="line">authpriv.*					/var/log/secure</span><br><span class="line">mail.*						-/var/log/maillog</span><br><span class="line">cron.*						/var/log/corn</span><br><span class="line">*.emerg						:omusrmsg:*</span><br><span class="line">uucp,news.crit					/var/log/spooler</span><br><span class="line">local7.*					/var/log/boot.log</span><br></pre></td></tr></table></figure>
+<h1 id="4-重启rsyslog"><a href="#4-重启rsyslog" class="headerlink" title="4. 重启rsyslog"></a>4. 重启rsyslog</h1><p>方法1：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/etc/init.d/rsyslog restart <span class="comment">#修改配置文件后一定要重启rsyslog服务</span></span><br><span class="line"></span><br><span class="line">/etc/init.d/rsyslog status  <span class="comment">#可查看服务状态</span></span><br></pre></td></tr></table></figure>
+<p>方法2：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">service rsyslog restart <span class="comment">#修改配置文件后一定要重启rsyslog服务</span></span><br><span class="line"></span><br><span class="line">service rsyslog status  <span class="comment">#查看服务状态</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="5-检验日志收集"><a href="#5-检验日志收集" class="headerlink" title="5. 检验日志收集"></a>5. 检验日志收集</h1><p>在日志服务器10.44.85.15上查看通过rsyslog收集的10.44.85.16的日志</p>
+<p>日志路径：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd /var/log/10.44.85.16/</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux-rsyslog/" rel="tag"># linux rsyslog</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/30/mysql数据库密码安全策略/" rel="next" title="mysql数据库密码安全策略">
+                <i class="fa fa-chevron-left"></i> mysql数据库密码安全策略
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/img/avatar/1.png"
+                alt="Hui Liu" />
+            
+              <p class="site-author-name" itemprop="name">Hui Liu</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/liuhuiIris" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:liuhuiiris@gmail.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://twitter.com/liuhuiiris" target="_blank" title="Twitter">
+                    
+                      <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-在10-44-85-16上修改-etc-rsyslog-conf"><span class="nav-number">1.</span> <span class="nav-text">1. 在10.44.85.16上修改/etc/rsyslog.conf</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-重启rsyslog"><span class="nav-number">2.</span> <span class="nav-text">2. 重启rsyslog</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-在10-44-85-15上修改-etc-rsyslog-conf"><span class="nav-number">3.</span> <span class="nav-text">3. 在10.44.85.15上修改/etc/rsyslog.conf</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-重启rsyslog"><span class="nav-number">4.</span> <span class="nav-text">4. 重启rsyslog</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-检验日志收集"><span class="nav-number">5.</span> <span class="nav-text">5. 检验日志收集</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hui Liu</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'liuhuiiris',
+            repo: 'liuhuiIris.github.io',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: '669c525401e94b83a7f83c852c204e60b269c895',
+            
+                client_id: 'b60a7b935c761fc413af'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
