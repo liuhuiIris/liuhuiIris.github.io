@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="sass 环境配置," />
+  <meta name="keywords" content="security mysql," />
 
 
 
@@ -79,31 +79,18 @@
 
 
 
-<meta name="description" content="1. 安装Ruby因为sass依赖于ruby环境，所以装sass之前先确认装了ruby。先导官网下载个ruby 下载地址：官网下载地址：中文网 在安装的时候，请勾选Add Ruby executables to your PATH这个选项，添加环境变量，不然以后使用编译软件的时候会提示找不到ruby环境  2. sas">
-<meta name="keywords" content="sass 环境配置">
+<meta name="description" content="1.安全审计要求由于安全审计要求，建议设置数据库密码复杂策略，启用密码复杂度验证函数，至少满足锁定时间大于3分钟，最长使用天数小于180天，可重用次数小于5次）；更改弱口令用户的密码，长度至少八位，由字母、数字或特殊字符混合组成，禁止用户名和口令相同 2.mysql5.6 参考文档连接限制: https://dev.m">
+<meta name="keywords" content="security mysql">
 <meta property="og:type" content="article">
-<meta property="og:title" content="sass安装配置">
-<meta property="og:url" content="http://yoursite.com/2016/11/10/sass安装配置/index.html">
+<meta property="og:title" content="mysql数据库密码安全策略">
+<meta property="og:url" content="http://yoursite.com/2018/11/30/mysql数据库密码安全策略/index.html">
 <meta property="og:site_name" content="liuhuiIris">
-<meta property="og:description" content="1. 安装Ruby因为sass依赖于ruby环境，所以装sass之前先确认装了ruby。先导官网下载个ruby 下载地址：官网下载地址：中文网 在安装的时候，请勾选Add Ruby executables to your PATH这个选项，添加环境变量，不然以后使用编译软件的时候会提示找不到ruby环境  2. sass安装安装完ruby之后，在开始菜单中，找到刚才我们安装的ruby，打开Sta">
+<meta property="og:description" content="1.安全审计要求由于安全审计要求，建议设置数据库密码复杂策略，启用密码复杂度验证函数，至少满足锁定时间大于3分钟，最长使用天数小于180天，可重用次数小于5次）；更改弱口令用户的密码，长度至少八位，由字母、数字或特殊字符混合组成，禁止用户名和口令相同 2.mysql5.6 参考文档连接限制: https://dev.mysql.com/doc/refman/5.6/en/connection-co">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://liuhuiiris.github.io/img/sass/ruby.png">
-<meta property="og:image" content="https://liuhuiiris.github.io/img/sass/ruby-cmd.png">
-<meta property="og:image" content="https://liuhuiiris.github.io/img/sass/sass-test.png">
-<meta property="og:image" content="https://liuhuiiris.github.io/img/sass/gem-sources.png">
-<meta property="og:image" content="https://liuhuiiris.github.io/img/sass/1.png">
-<meta property="og:image" content="https://liuhuiiris.github.io/img/sass/2.png">
-<meta property="og:image" content="https://liuhuiiris.github.io/img/sass/3.png">
-<meta property="og:image" content="https://liuhuiiris.github.io/img/sass/4.png">
-<meta property="og:image" content="https://liuhuiiris.github.io/img/sass/5.png">
-<meta property="og:image" content="https://liuhuiiris.github.io/img/sass/6.png">
-<meta property="og:image" content="https://liuhuiiris.github.io/img/sass/7.png">
-<meta property="og:image" content="https://liuhuiiris.github.io/img/sass/8.png">
-<meta property="og:updated_time" content="2017-11-29T14:24:18.000Z">
+<meta property="og:updated_time" content="2018-11-30T04:04:28.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="sass安装配置">
-<meta name="twitter:description" content="1. 安装Ruby因为sass依赖于ruby环境，所以装sass之前先确认装了ruby。先导官网下载个ruby 下载地址：官网下载地址：中文网 在安装的时候，请勾选Add Ruby executables to your PATH这个选项，添加环境变量，不然以后使用编译软件的时候会提示找不到ruby环境  2. sass安装安装完ruby之后，在开始菜单中，找到刚才我们安装的ruby，打开Sta">
-<meta name="twitter:image" content="https://liuhuiiris.github.io/img/sass/ruby.png">
+<meta name="twitter:title" content="mysql数据库密码安全策略">
+<meta name="twitter:description" content="1.安全审计要求由于安全审计要求，建议设置数据库密码复杂策略，启用密码复杂度验证函数，至少满足锁定时间大于3分钟，最长使用天数小于180天，可重用次数小于5次）；更改弱口令用户的密码，长度至少八位，由字母、数字或特殊字符混合组成，禁止用户名和口令相同 2.mysql5.6 参考文档连接限制: https://dev.mysql.com/doc/refman/5.6/en/connection-co">
 
 
 
@@ -133,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/11/10/sass安装配置/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/11/30/mysql数据库密码安全策略/"/>
 
 
 
 
 
-  <title>sass安装配置 | liuhuiIris</title>
+  <title>mysql数据库密码安全策略 | liuhuiIris</title>
   
 
 
@@ -246,7 +233,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/10/sass安装配置/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/30/mysql数据库密码安全策略/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Hui Liu">
@@ -263,7 +250,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">sass安装配置</h1>
+          <h1 class="post-title" itemprop="name headline">mysql数据库密码安全策略</h1>
         
 
         <div class="post-meta">
@@ -275,8 +262,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-11-10T19:46:22+08:00">
-                2016-11-10
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-30T12:00:17+08:00">
+                2018-11-30
               </time>
             
 
@@ -294,8 +281,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2016/11/10/sass安装配置/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count gitment-comments-count" data-xid="/2016/11/10/sass安装配置/" itemprop="commentsCount"></span>
+                <a href="/2018/11/30/mysql数据库密码安全策略/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2018/11/30/mysql数据库密码安全策略/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -323,48 +310,24 @@
       
 
       
-        <h2 id="1-安装Ruby"><a href="#1-安装Ruby" class="headerlink" title=" 1. 安装Ruby"></a> 1. 安装Ruby</h2><pre><code>因为sass依赖于ruby环境，所以装sass之前先确认装了ruby。先导官网下载个ruby
-</code></pre><p>下载地址：<a href="http://rubyinstaller.org/downloads" target="_blank" rel="noopener">官网</a><br>下载地址：<a href="http://www.ruby-lang.org/zh_cn/downloads/" target="_blank" rel="noopener">中文网</a></p>
-<pre><code>在安装的时候，请勾选Add Ruby executables to your PATH这个选项，添加环境变量，不然以后使用编译软件的时候会提示找不到ruby环境
-</code></pre><p><img src="https://liuhuiiris.github.io/img/sass/ruby.png" alt="&quot;sass&quot;"></p>
-<h2 id="2-sass安装"><a href="#2-sass安装" class="headerlink" title="2. sass安装"></a>2. sass安装</h2><pre><code>安装完ruby之后，在开始菜单中，找到刚才我们安装的ruby，打开Start Command Prompt with Ruby
-</code></pre><p><img src="https://liuhuiiris.github.io/img/sass/ruby-cmd.png" alt="&quot;sass&quot;"></p>
-<pre><code>在任意位置新建文件夹，如sass-test
-在命令窗口中找到该文件夹如：
-</code></pre><p><img src="https://liuhuiiris.github.io/img/sass/sass-test.png" alt="&quot;sass&quot;"></p>
-<pre><code>查看文件源
-</code></pre><p><img src="https://liuhuiiris.github.io/img/sass/gem-sources.png" alt="&quot;sass&quot;"></p>
-<pre><code>国外网站可能会访问不到，因此更改为国内源：
-</code></pre><p><img src="https://liuhuiiris.github.io/img/sass/1.png" alt="&quot;sass&quot;"></p>
-<pre><code>下载sass，gem install sass ,如果出现下图，则安装成功
-</code></pre><p><img src="https://liuhuiiris.github.io/img/sass/2.png" alt="&quot;sass&quot;"></p>
-<h2 id="3-简单使用sass"><a href="#3-简单使用sass" class="headerlink" title="3. 简单使用sass"></a>3. 简单使用sass</h2><p><img src="https://liuhuiiris.github.io/img/sass/3.png" alt="&quot;sass&quot;"></p>
-<pre><code>具体命令语法，可参考：
-http://www.w3cplus.com/sassguide/syntax.html
-http://www.ruanyifeng.com/blog/2012/06/sass.html
-</code></pre><h2 id="4-HBuilder配置"><a href="#4-HBuilder配置" class="headerlink" title="4. HBuilder配置"></a>4. HBuilder配置</h2><pre><code>工具-&gt;预编译器配置-&gt;.sass,.scss-&gt;编辑
+        <h1 id="1-安全审计要求"><a href="#1-安全审计要求" class="headerlink" title="1.安全审计要求"></a>1.安全审计要求</h1><p>由于安全审计要求，建议设置数据库密码复杂策略，启用密码复杂度验证函数，至少满足锁定时间大于3分钟，最长使用天数小于180天，可重用次数小于5次）；更改弱口令用户的密码，长度至少八位，由字母、数字或特殊字符混合组成，禁止用户名和口令相同</p>
+<h1 id="2-mysql5-6-参考文档"><a href="#2-mysql5-6-参考文档" class="headerlink" title="2.mysql5.6 参考文档"></a>2.mysql5.6 参考文档</h1><p>连接限制:</p>
+<p><a href="https://dev.mysql.com/doc/refman/5.6/en/connection-control.html" target="_blank" rel="noopener">https://dev.mysql.com/doc/refman/5.6/en/connection-control.html</a></p>
+<p>密码复杂度设置：</p>
+<p><a href="https://dev.mysql.com/doc/refman/5.6/en/validate-password.html" target="_blank" rel="noopener">https://dev.mysql.com/doc/refman/5.6/en/validate-password.html</a> </p>
+<p>my.cnf文件说明：</p>
+<p><a href="https://dev.mysql.com/doc/refman/5.6/en/option-files.html" target="_blank" rel="noopener">https://dev.mysql.com/doc/refman/5.6/en/option-files.html</a></p>
+<p>可通过以下命令查看部分参数内容</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ps aux | grep mysql</span><br><span class="line"></span><br><span class="line">liuhui           15695   1.2  0.0  2443044    820 s000  S+   11:47上午   0:00.00 grep --color=auto --exclude-dir=.bzr --exclude-dir=CVS --exclude-dir=.git --exclude-dir=.hg --exclude-dir=.svn mysql</span><br><span class="line">_mysql           96213   0.0  0.0  2831668   1364   ??  Ss   三02下午   0:10.16 /usr/<span class="built_in">local</span>/mysql/bin/mysqld --user=_mysql --basedir=/usr/<span class="built_in">local</span>/mysql --datadir=/usr/<span class="built_in">local</span>/mysql/data --plugin-dir=/usr/<span class="built_in">local</span>/mysql/lib/plugin --<span class="built_in">log</span>-error=/usr/<span class="built_in">local</span>/mysql/data/mysqld.local.err --pid-file=/usr/<span class="built_in">local</span>/mysql/data/mysqld.local.pid</span><br></pre></td></tr></table></figure>
+<p>案例如下：</p>
+<blockquote>
+<p>注意可能有些配置在用户机器上不生效，导致mysql无法正常启动</p>
+<p>此时注释掉相关报错参数，重启mysql</p>
+<p>改为通过官网中命令形式进行设置<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">[liuhui@cloudwiz] $ vi /etc/my.cnf</span><br><span class="line"></span><br><span class="line">[base]</span><br><span class="line">basedir = /usr/<span class="built_in">local</span>/mysql</span><br><span class="line">datadir = /usr/<span class="built_in">local</span>/mysql/data</span><br><span class="line">port = 3306</span><br><span class="line">socket = /tmp/mysql.sock</span><br><span class="line">log_error = /usr/<span class="built_in">local</span>/mysql/data/mysqld.local.err</span><br><span class="line">pid-file = /usr/<span class="built_in">local</span>/mysql/data/mysqld.local.pid</span><br><span class="line">user = mysql</span><br><span class="line"></span><br><span class="line">sql_mode = NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES</span><br><span class="line"></span><br><span class="line">[client]</span><br><span class="line">port = 3306</span><br><span class="line">socket = /tmp/mysql.sock</span><br><span class="line"></span><br><span class="line">[mysqld]</span><br><span class="line"><span class="comment"># localhost work, but costumer's host dosen't work, and I don't know why</span></span><br><span class="line">default_password_lifetime = 180</span><br><span class="line"></span><br><span class="line"><span class="comment"># load plugin of validate_password.so</span></span><br><span class="line">plugin-load=validate_password.so</span><br><span class="line">validate_password_length = 8</span><br><span class="line">validate_password_policy = 1</span><br><span class="line">validate-password=FORCE_PLUS_PERMANENT</span><br><span class="line"></span><br><span class="line"><span class="comment"># load plugin of connetion_control.so</span></span><br><span class="line"> plugin-load-add = connection_control.so</span><br><span class="line"><span class="comment"># force enable plugin</span></span><br><span class="line"><span class="comment"># connection-control = FORCE_PLUS_PREMANENT</span></span><br><span class="line"><span class="comment"># connection-control-failed-login-attempts = FORCE_PLUS_PREMANENT</span></span><br><span class="line"><span class="comment"># connection_control_failed_connections_threshold = 3</span></span><br><span class="line"><span class="comment"># connection_control_max_connection_delay = 2147483647</span></span><br><span class="line"><span class="comment"># connection_control_min_connection_delay = 10000</span></span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<h1 id="3-mysql-5-6-与-5-7的区别"><a href="#3-mysql-5-6-与-5-7的区别" class="headerlink" title="3.mysql 5.6 与 5.7的区别"></a>3.mysql 5.6 与 5.7的区别</h1><p>mysql5.6的不会对之前创建的用户造成影响，不改密码也OK</p>
+<p>mysql5.7的会检测之前的用户，如果密码强度不够，会强制要求修改密码</p>
 
-命令参数：--style=compact --sourcemap=none --no-cache %FileName% %FileBaseName%.css
-</code></pre><p><img src="https://liuhuiiris.github.io/img/sass/4.png" alt="&quot;sass&quot;"></p>
-<h2 id="5-sublime配置"><a href="#5-sublime配置" class="headerlink" title="5. sublime配置"></a>5. sublime配置</h2><pre><code>关于sass 3.3.0更新说明——3.3.0
-</code></pre><p>sublime相关插件为：<a href="https://github.com/MarioRicalde/SCSS.tmbundle" target="_blank" rel="noopener">scss语法高亮</a>，<a href="https://github.com/nathos/sass-textmate-bundle" target="_blank" rel="noopener">sass语法高亮</a>，<a href="https://github.com/jaumefontal/SASS-Build-SublimeText2" target="_blank" rel="noopener">编译</a>，<a href="https://github.com/alexnj/SublimeOnSaveBuild" target="_blank" rel="noopener">保存即编译</a>，<a href="https://github.com/badsyntax/SassBeautify" target="_blank" rel="noopener">格式化</a></p>
-<pre><code>打开Sublime-&gt;Preferences-&gt;Browse Packages…
-将上述插件下载并解压至该文件夹下，重启Sublime
-
-检查是否安装成功
-Ctrl+Shift+P    -&gt; List Packages 可以找到下述插件
-</code></pre><p><img src="https://liuhuiiris.github.io/img/sass/5.png" alt="&quot;sass&quot;"></p>
-<h2 id="6-使用Sublime-Sass"><a href="#6-使用Sublime-Sass" class="headerlink" title="6. 使用Sublime Sass"></a>6. 使用Sublime Sass</h2><pre><code>创建scss文件，实时编译Ctrl+b
-如果不想生成.map文件，找到插件目录
-打开Sublime-&gt;Preferences-&gt;Browse Packages…
-找到该文件
-</code></pre><p><img src="https://liuhuiiris.github.io/img/sass/6.png" alt="&quot;sass&quot;"></p>
-<pre><code>记事本打开
-</code></pre><p><img src="https://liuhuiiris.github.io/img/sass/7.png" alt="&quot;sass&quot;"></p>
-<pre><code>加上“--sourcemap=none”或者其他参数配置
-</code></pre><p><img src="https://liuhuiiris.github.io/img/sass/8.png" alt="&quot;sass&quot;"></p>
-<pre><code>大功告成！
-</code></pre>
       
     </div>
     
@@ -381,7 +344,7 @@ Ctrl+Shift+P    -&gt; List Packages 可以找到下述插件
       
         <div class="post-tags">
           
-            <a href="/tags/sass-环境配置/" rel="tag"># sass 环境配置</a>
+            <a href="/tags/security-mysql/" rel="tag"># security mysql</a>
           
         </div>
       
@@ -394,8 +357,8 @@ Ctrl+Shift+P    -&gt; List Packages 可以找到下述插件
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/11/10/gulp配置/" rel="next" title="gulp配置">
-                <i class="fa fa-chevron-left"></i> gulp配置
+              <a href="/2018/11/19/nmap命令-基础用法/" rel="next" title="nmap命令--基础用法">
+                <i class="fa fa-chevron-left"></i> nmap命令--基础用法
               </a>
             
           </div>
@@ -403,10 +366,6 @@ Ctrl+Shift+P    -&gt; List Packages 可以找到下述插件
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/11/11/前端之路陪我走过的网站/" rel="prev" title="前端之路陪我走过的网站">
-                前端之路陪我走过的网站 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -562,7 +521,7 @@ Ctrl+Shift+P    -&gt; List Packages 可以找到下述插件
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-安装Ruby"><span class="nav-number">1.</span> <span class="nav-text"> 1. 安装Ruby</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-sass安装"><span class="nav-number">2.</span> <span class="nav-text">2. sass安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-简单使用sass"><span class="nav-number">3.</span> <span class="nav-text">3. 简单使用sass</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-HBuilder配置"><span class="nav-number">4.</span> <span class="nav-text">4. HBuilder配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-sublime配置"><span class="nav-number">5.</span> <span class="nav-text">5. sublime配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-使用Sublime-Sass"><span class="nav-number">6.</span> <span class="nav-text">6. 使用Sublime Sass</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-安全审计要求"><span class="nav-number">1.</span> <span class="nav-text">1.安全审计要求</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-mysql5-6-参考文档"><span class="nav-number">2.</span> <span class="nav-text">2.mysql5.6 参考文档</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-mysql-5-6-与-5-7的区别"><span class="nav-number">3.</span> <span class="nav-text">3.mysql 5.6 与 5.7的区别</span></a></li></ol></div>
             
 
           </div>
