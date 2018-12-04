@@ -229,6 +229,143 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/29/海外服务器搭建小梯子/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hui Liu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/img/avatar/1.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="liuhuiIris">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/11/29/海外服务器搭建小梯子/" itemprop="url">海外服务器搭建小梯子</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-29T21:10:33+08:00">
+                2017-11-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>文章来源: <a href="http://morning.work/page/2015-12/install-shadowsocks-on-centos-7.html" target="_blank" rel="noopener">老雷</a></p>
+<h1 id="1、安装客户端"><a href="#1、安装客户端" class="headerlink" title="1、安装客户端"></a>1、安装客户端</h1><p><a href="www.rbq.buzz">sibyl云加速</a>下载各种版本的shadowsocks</p>
+<h1 id="2、Centos7搭建shadowsocks服务器"><a href="#2、Centos7搭建shadowsocks服务器" class="headerlink" title="2、Centos7搭建shadowsocks服务器"></a>2、Centos7搭建shadowsocks服务器</h1><p>CentOS 7 开始默认使用Systemd作为开启启动脚本的管理工具，Shadowsocks则是当前比较受欢迎的科学上网工具，本文将介绍如何在 CentOS 下安装和配置 Shadowsocks 服务。</p>
+<h2 id="2-1-安装pip"><a href="#2-1-安装pip" class="headerlink" title="2.1 安装pip"></a>2.1 安装pip</h2><p>pip是 python 的包管理工具。在本文中将使用 python 版本的 shadowsocks，此版本的 shadowsocks 已发布到 pip 上，因此我们需要通过 pip 命令来安装。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl <span class="string">"https://bootstrap.pypa.io/get-pip.py"</span> -o <span class="string">"get-pip.py"</span></span><br><span class="line">python get-pip.py</span><br></pre></td></tr></table></figure>
+<h2 id="2-2-安装配置-shadowsocks"><a href="#2-2-安装配置-shadowsocks" class="headerlink" title="2.2 安装配置 shadowsocks"></a>2.2 安装配置 shadowsocks</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip install --upgrade pip</span><br><span class="line">pip install shadowsocks</span><br></pre></td></tr></table></figure>
+<h2 id="2-3-配置shadowsocks-json文件"><a href="#2-3-配置shadowsocks-json文件" class="headerlink" title="2.3 配置shadowsocks.json文件"></a>2.3 配置shadowsocks.json文件</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/shadowsocks.json</span><br><span class="line">&#123;</span><br><span class="line">	<span class="string">"server"</span>        : <span class="string">"0.0.0.0"</span>,</span><br><span class="line">	<span class="string">"server_port"</span>   : 443,</span><br><span class="line">	<span class="string">"local_address"</span> : <span class="string">"127.0.0.1"</span>,</span><br><span class="line">	<span class="string">"local_port"</span>    : 1080,</span><br><span class="line">	<span class="string">"password"</span>      : <span class="string">"your password"</span>,</span><br><span class="line">	<span class="string">"timeout"</span>       : 300,</span><br><span class="line">	<span class="string">"method"</span>        : <span class="string">"rc4-md5"</span>,</span><br><span class="line">	<span class="string">"fast_open"</span>     : <span class="literal">false</span>,</span><br><span class="line">	<span class="string">"workers"</span>       : 5</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>说明：</p>
+<p>method为加密方法，可选aes-128-cfb, aes-192-cfb, aes-256-cfb, bf-cfb, cast5-cfb, des-cfb, rc4-md5, chacha20, salsa20, rc4, table<br>server_port为服务监听端口<br>password为密码，可使用密码生成工具生成一个随机密码<br>以上三项信息在配置 shadowsocks 客户端时需要配置一致，具体说明可查看 shadowsocks 的帮助文档。</p>
+<h2 id="2-4-启动"><a href="#2-4-启动" class="headerlink" title="2.4 启动"></a>2.4 启动</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#启动</span></span><br><span class="line">ssserver -c /etc/shadowsocks.json -d start</span><br><span class="line"><span class="comment">#停止</span></span><br><span class="line">ssserver -c /etc/shadowsocks.json -d stop</span><br><span class="line"><span class="comment">#重启</span></span><br><span class="line">ssserver -c /etc/shadowsocks.json -d restart</span><br></pre></td></tr></table></figure>
+<h1 id="3-客户端配置启动"><a href="#3-客户端配置启动" class="headerlink" title="3.客户端配置启动"></a>3.客户端配置启动</h1><p><img src="https://liuhuiiris.github.io/img/shadowsocks/shadowsocks.png" alt="shadowsocks"></p>
+<h1 id="4-连接失败问题"><a href="#4-连接失败问题" class="headerlink" title="4.连接失败问题"></a>4.连接失败问题</h1><h2 id="4-1-服务器未开放443端口-一般是防火墙原因"><a href="#4-1-服务器未开放443端口-一般是防火墙原因" class="headerlink" title="4.1 服务器未开放443端口,一般是防火墙原因"></a>4.1 服务器未开放443端口,一般是防火墙原因</h2><blockquote>
+<p>亦可通过管理端页面配置端口权限</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 启动防火墙</span></span><br><span class="line">$ systemctl start firewalld.service</span><br><span class="line"></span><br><span class="line"><span class="comment"># 若报错 Failed to start firewalld.service: Unit firewalld.service is masked.先执行以下命令</span></span><br><span class="line">$ systemctl unmask firewalld.service</span><br><span class="line"></span><br><span class="line"><span class="comment"># 开放443端口</span></span><br><span class="line">$ firewall-cmd --zone=public --add-port=443/tcp --permanent</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重启防火墙</span></span><br><span class="line">$ firewall-cmd --reload</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>参数说明：<br>–zone #作用域<br>–add-port=80/tcp #添加端口，格式为：端口/通讯协议<br>–permanent #代表永久生效，没有此参数重启后失效</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/21/Mac环境中Jenkins的停止和启动命令/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1603,166 +1740,6 @@ Git 是 Linus Torvalds 为了帮助管理 Linux 内核开发而开发的一个�
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/10/sass安装配置/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Hui Liu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/img/avatar/1.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="liuhuiIris">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/11/10/sass安装配置/" itemprop="url">sass安装配置</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-11-10T19:46:22+08:00">
-                2016-11-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="1-安装Ruby"><a href="#1-安装Ruby" class="headerlink" title=" 1. 安装Ruby"></a> 1. 安装Ruby</h2><pre><code>因为sass依赖于ruby环境，所以装sass之前先确认装了ruby。先导官网下载个ruby
-</code></pre><p>下载地址：<a href="http://rubyinstaller.org/downloads" target="_blank" rel="noopener">官网</a><br>下载地址：<a href="http://www.ruby-lang.org/zh_cn/downloads/" target="_blank" rel="noopener">中文网</a></p>
-<pre><code>在安装的时候，请勾选Add Ruby executables to your PATH这个选项，添加环境变量，不然以后使用编译软件的时候会提示找不到ruby环境
-</code></pre><p><img src="https://liuhuiiris.github.io/img/sass/ruby.png" alt="&quot;sass&quot;"></p>
-<h2 id="2-sass安装"><a href="#2-sass安装" class="headerlink" title="2. sass安装"></a>2. sass安装</h2><pre><code>安装完ruby之后，在开始菜单中，找到刚才我们安装的ruby，打开Start Command Prompt with Ruby
-</code></pre><p><img src="https://liuhuiiris.github.io/img/sass/ruby-cmd.png" alt="&quot;sass&quot;"></p>
-<pre><code>在任意位置新建文件夹，如sass-test
-在命令窗口中找到该文件夹如：
-</code></pre><p><img src="https://liuhuiiris.github.io/img/sass/sass-test.png" alt="&quot;sass&quot;"></p>
-<pre><code>查看文件源
-</code></pre><p><img src="https://liuhuiiris.github.io/img/sass/gem-sources.png" alt="&quot;sass&quot;"></p>
-<pre><code>国外网站可能会访问不到，因此更改为国内源：
-</code></pre><p><img src="https://liuhuiiris.github.io/img/sass/1.png" alt="&quot;sass&quot;"></p>
-<pre><code>下载sass，gem install sass ,如果出现下图，则安装成功
-</code></pre><p><img src="https://liuhuiiris.github.io/img/sass/2.png" alt="&quot;sass&quot;"></p>
-<h2 id="3-简单使用sass"><a href="#3-简单使用sass" class="headerlink" title="3. 简单使用sass"></a>3. 简单使用sass</h2><p><img src="https://liuhuiiris.github.io/img/sass/3.png" alt="&quot;sass&quot;"></p>
-<pre><code>具体命令语法，可参考：
-http://www.w3cplus.com/sassguide/syntax.html
-http://www.ruanyifeng.com/blog/2012/06/sass.html
-</code></pre><h2 id="4-HBuilder配置"><a href="#4-HBuilder配置" class="headerlink" title="4. HBuilder配置"></a>4. HBuilder配置</h2><pre><code>工具-&gt;预编译器配置-&gt;.sass,.scss-&gt;编辑
-
-命令参数：--style=compact --sourcemap=none --no-cache %FileName% %FileBaseName%.css
-</code></pre><p><img src="https://liuhuiiris.github.io/img/sass/4.png" alt="&quot;sass&quot;"></p>
-<h2 id="5-sublime配置"><a href="#5-sublime配置" class="headerlink" title="5. sublime配置"></a>5. sublime配置</h2><pre><code>关于sass 3.3.0更新说明——3.3.0
-</code></pre><p>sublime相关插件为：<a href="https://github.com/MarioRicalde/SCSS.tmbundle" target="_blank" rel="noopener">scss语法高亮</a>，<a href="https://github.com/nathos/sass-textmate-bundle" target="_blank" rel="noopener">sass语法高亮</a>，<a href="https://github.com/jaumefontal/SASS-Build-SublimeText2" target="_blank" rel="noopener">编译</a>，<a href="https://github.com/alexnj/SublimeOnSaveBuild" target="_blank" rel="noopener">保存即编译</a>，<a href="https://github.com/badsyntax/SassBeautify" target="_blank" rel="noopener">格式化</a></p>
-<pre><code>打开Sublime-&gt;Preferences-&gt;Browse Packages…
-将上述插件下载并解压至该文件夹下，重启Sublime
-
-检查是否安装成功
-Ctrl+Shift+P    -&gt; List Packages 可以找到下述插件
-</code></pre><p><img src="https://liuhuiiris.github.io/img/sass/5.png" alt="&quot;sass&quot;"></p>
-<h2 id="6-使用Sublime-Sass"><a href="#6-使用Sublime-Sass" class="headerlink" title="6. 使用Sublime Sass"></a>6. 使用Sublime Sass</h2><pre><code>创建scss文件，实时编译Ctrl+b
-如果不想生成.map文件，找到插件目录
-打开Sublime-&gt;Preferences-&gt;Browse Packages…
-找到该文件
-</code></pre><p><img src="https://liuhuiiris.github.io/img/sass/6.png" alt="&quot;sass&quot;"></p>
-<pre><code>记事本打开
-</code></pre><p><img src="https://liuhuiiris.github.io/img/sass/7.png" alt="&quot;sass&quot;"></p>
-<pre><code>加上“--sourcemap=none”或者其他参数配置
-</code></pre><p><img src="https://liuhuiiris.github.io/img/sass/8.png" alt="&quot;sass&quot;"></p>
-<pre><code>大功告成！
-</code></pre>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1817,7 +1794,7 @@ Ctrl+Shift+P    -&gt; List Packages 可以找到下述插件
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-count">22</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1830,7 +1807,7 @@ Ctrl+Shift+P    -&gt; List Packages 可以找到下述插件
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-count">17</span>
                   <span class="site-state-item-name">标签</span>
                 
               </div>
