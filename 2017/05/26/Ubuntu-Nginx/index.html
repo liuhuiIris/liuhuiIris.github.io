@@ -414,28 +414,6 @@ nginx -s reload &gt;&gt;重读配置文件
 
   
 
-  
-     
-     
-     
-     
-     <link rel="stylesheet" href="https://www.wenjunjiang.win/css/gitment.css">
-     <script src="https://www.wenjunjiang.win/js/gitment.js"></script>
-     
-         <script type="text/javascript">
-             var gitment = new Gitment({
-                 id: document.location.href, 
-                 owner: 'liuhuiiris',
-                 repo: 'liuhuiIris.github.io',
-                 oauth: {
-                     client_id: 'b60a7b935c761fc413af',
-                     client_secret: '94fdeec6075365defb2a8424dd340d86e1231c22'
-                 }});
-             gitment.render('gitment-container');
-         </script>
-     
- 
-
 
 
         </div>
@@ -731,6 +709,43 @@ nginx -s reload &gt;&gt;重读配置文件
 
 
 
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: 'Ubuntu--Nginx', 
+            owner: 'liuhuiiris',
+            repo: 'liuhuiIris.github.io',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: '94fdeec6075365defb2a8424dd340d86e1231c22',
+            
+                client_id: 'b60a7b935c761fc413af'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
 
 
 
