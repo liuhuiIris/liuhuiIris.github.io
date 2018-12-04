@@ -448,12 +448,33 @@ Git 是 Linus Torvalds 为了帮助管理 Linux 内核开发而开发的一个�
   
     <div class="comments" id="comments">
       
-        <div onclick="showGitment()" id="gitment-display-button">显示 Gitment 评论</div>
-        <div id="gitment-container" style="display:none"></div>
+        <div id="gitment-container"></div>
       
     </div>
 
   
+
+  
+     
+     
+     
+     
+     <link rel="stylesheet" href="https://www.wenjunjiang.win/css/gitment.css">
+     <script src="https://www.wenjunjiang.win/js/gitment.js"></script>
+     
+         <script type="text/javascript">
+             var gitment = new Gitment({
+                 id: document.location.href, 
+                 owner: '',
+                 repo: '',
+                 oauth: {
+                     client_id: '',
+                     client_secret: ''
+                 }});
+             gitment.render('gitment-container');
+         </script>
+     
+ 
 
 
 
@@ -783,11 +804,7 @@ Git 是 Linus Torvalds 为了帮助管理 Linux 内核开发而开发的一个�
       }
 
       
-      function showGitment(){
-        document.getElementById("gitment-display-button").style.display = "none";
-        document.getElementById("gitment-container").style.display = "block";
-        renderGitment();
-      }
+      renderGitment();
       
       </script>
     

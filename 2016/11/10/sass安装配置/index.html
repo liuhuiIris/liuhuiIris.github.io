@@ -438,12 +438,33 @@ Ctrl+Shift+P    -&gt; List Packages 可以找到下述插件
   
     <div class="comments" id="comments">
       
-        <div onclick="showGitment()" id="gitment-display-button">显示 Gitment 评论</div>
-        <div id="gitment-container" style="display:none"></div>
+        <div id="gitment-container"></div>
       
     </div>
 
   
+
+  
+     
+     
+     
+     
+     <link rel="stylesheet" href="https://www.wenjunjiang.win/css/gitment.css">
+     <script src="https://www.wenjunjiang.win/js/gitment.js"></script>
+     
+         <script type="text/javascript">
+             var gitment = new Gitment({
+                 id: document.location.href, 
+                 owner: '',
+                 repo: '',
+                 oauth: {
+                     client_id: '',
+                     client_secret: ''
+                 }});
+             gitment.render('gitment-container');
+         </script>
+     
+ 
 
 
 
@@ -773,11 +794,7 @@ Ctrl+Shift+P    -&gt; List Packages 可以找到下述插件
       }
 
       
-      function showGitment(){
-        document.getElementById("gitment-display-button").style.display = "none";
-        document.getElementById("gitment-container").style.display = "block";
-        renderGitment();
-      }
+      renderGitment();
       
       </script>
     
